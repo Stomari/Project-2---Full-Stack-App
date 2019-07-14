@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const flash = require('connect-flash');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
@@ -17,8 +18,6 @@ router.post('/signup', (req, res) => {
     res.render('auth/signup', { message: 'Indicate username, password and email are required' });
     return;
   }
-
-  console.log('teste ###################################', { username });
 
   User.findOne({ username })
     .then((user) => {
@@ -41,14 +40,27 @@ router.post('/signup', (req, res) => {
         if (err) {
           res.render('auth/signup', { message: 'Something went wrong' });
         }
-      })
-        .then((info) => {
-          console.log(info);
-          res.redirect('/');
-        })
-        .catch(error => console.log(error));
+      });
+
+      res.redirect('/');
     })
     .catch(err => console.log(err));
+});
+
+router.get('/login', (req, res) => {
+  res.render('auth/login', { message: req.flash('error') });
+});
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true,
+  passReqToCallback: true,
+}));
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/login');
 });
 
 module.exports = router;
