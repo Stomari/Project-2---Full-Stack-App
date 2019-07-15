@@ -17,9 +17,10 @@ const userSchema = new Schema({
   votes: Number,
   votesValues: Number,
   Friends: { type: Schema.Types.ObjectId, ref: 'User' },
+  firstTime: Boolean, default: false,
 }, {
-  timestamps: true,
-});
+    timestamps: true,
+  });
 
 const User = mongoose.model('User', userSchema);
 
