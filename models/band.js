@@ -5,9 +5,7 @@ const Schema = mongoose.Schema;
 const bandSchema = new Schema({
   bandname: { type: String, required: true },
   leader: { type: Schema.Types.ObjectId, ref: 'User' },
-  genre: {
-    type: Array,
-  },
+  genre: Array,
   members: { type: Schema.Types.ObjectId, ref: 'User' },
   votes: Number,
   votesValues: Number,
