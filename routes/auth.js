@@ -58,7 +58,6 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true,
   passReqToCallback: true,
 }), (req, res) => {
-  console.log(req.user.firstTime)
   if (!req.user.firstTime) {
     User.update( { _id: req.user.id }, { firstTime: true })
       .then(() => res.redirect('/profile/edit'))
