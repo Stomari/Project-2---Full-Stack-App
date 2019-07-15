@@ -31,14 +31,14 @@ router.post('/signup', (req, res) => {
 
       const newUser = new User({
         username,
-        firstName,
+        name: firstName,
         surname,
         age,
         password: hashPass,
         email,
         role,
       });
-
+      console.log(newUser)
       newUser.save((err) => {
         if (err) {
           res.render('auth/signup', { message: 'Something went wrong' });

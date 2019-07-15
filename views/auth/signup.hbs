@@ -6,23 +6,23 @@
 
   <br><br>
 
-  <label for="username">First Name</label>
-  <input id="username" type="text" name="firstName" placeholder="Your first name">
+  <label for="firstName">First Name</label>
+  <input id="firstName" type="text" name="firstName" placeholder="Your first name">
 
   <br><br>
 
-  <label for="username">Surname</label>
-  <input id="username" type="text" name="surname" placeholder="Your surname">
+  <label for="surname">Surname</label>
+  <input id="surname" type="text" name="surname" placeholder="Your surname">
 
   <br><br>
 
-  <label for="username">Age</label>
-  <input id="username" type="text" name="age" placeholder="Your age">
+  <label for="age">Age</label>
+  <input id="age" type="text" name="age" placeholder="Your age">
 
   <br><br>
 
-  <label for="username">Email</label>
-  <input id="username" type="text" name="email" placeholder="me@domain.com">
+  <label for="email">Email</label>
+  <input id="email" type="text" name="email" placeholder="me@domain.com">
 
   <br><br>
 
@@ -34,7 +34,7 @@
   {{/if}}
 
   <br><br>
-  // RETIRAR DPS
+  {{!-- RETIRAR DPS --}}
   <label for="role">Role</label>
   <select name="role">
     <option value="GUEST">GUEST</option>
@@ -42,10 +42,10 @@
     <option value="ADMIN">ADMIN</option>
   </select>
 
-  <button>Create account</button>
+  <button type="submit">Create account</button>
 
   <p class="account-message">
     Do you already have an account?
-    <a href="/auth/login">Login</a>
+    <a href="/login">Login</a>
   </p>
 </form>
