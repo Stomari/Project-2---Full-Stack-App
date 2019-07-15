@@ -1,2 +1,12 @@
-<h1>Socorro</h1>
-<p>{{username}}</p>
+<div>
+  <h3>{{name}} {{surname}}</h3>
+  <p>{{age}}</p>
+  <p>{{username}}</p>
+  <ul>
+    {{#each instruments}}
+    <li>{{this}}</li>
+    {{/each}}
+  </ul>
+  <p>{{biography}}</p>
+  <a href="/profile/edit"><button>EDIT</button></a>
+</div>

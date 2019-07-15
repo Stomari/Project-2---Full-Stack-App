@@ -2,62 +2,69 @@
 
 <form action="/profile/edit" method="POST" id="form-container">
 
-  <label for="firstName">First Name</label>
-  <input id="firstName" type="text" name="firstName" placeholder="Your first name">
+  <label for="name">First Name</label>
+  <input id="firstName" type="text" name="name" value="{{data.name}}">
 
   <br><br>
 
   <label for="surname">Surname</label>
-  <input id="surname" type="text" name="surname" placeholder="Your surname">
+  <input id="surname" type="text" name="surname" value="{{data.surname}}">
 
   <br><br>
 
   <label for="age">Age</label>
-  <input id="age" type="text" name="age" placeholder="Your age">
+  <input id="age" type="number" name="age" value="{{data.age}}">
 
   <br><br>
 
   <label for="username">Username</label>
-  <input id="username" type="text" name="username" placeholder="Your username">
-
-  <br><br>
-
-  <label for="password">Password</label>
-  <input id="password" type="password" name="password" placeholder="Your password">
+  <input id="username" type="text" name="username" value="{{data.username}}">
 
   <br><br>
 
   <label for="email">Email</label>
-  <input id="email" type="text" name="email" placeholder="me@domain.com">
+  <input id="email" type="text" name="email" value="{{data.email}}">
 
   <br><br>
 
-  <input type="checkbox" id="electric-guitar" name="electric-guitar">
-  <label for="electric-guitar">Electric Guitar</label>
-  <input type="checkbox" id="acoustic-guitar" name="acoustic-guitar">
-  <label for="acoustic-guitar">Acoustic Guitar</label>
-  <input type="checkbox" id="bass" name="bass">
-  <label for="bass">Bass</label>
-  <input type="checkbox" id="keyboards" name="keyboards">
-  <label for="keyboards">Keyboards</label>
-  <input type="checkbox" id="piano" name="piano">
-  <label for="piano">Piano</label>
-  <input type="checkbox" id="drums" name="drums">
-  <label for="drums">Drums</label>
-  <input type="checkbox" id="piano" name="piano">
-  <label for="piano">Piano</label>
-  <input type="checkbox" id="violin" name="violin">
-  <label for="violin">Violin</label>
-  <input type="checkbox" id="piano" name="piano">
-  <label for="piano">Piano</label>
-  <input type="checkbox" id="piano" name="piano">
-  <label for="piano">Piano</label>
+  <div id="checkboxes">
+  
+    <input type="checkbox" id="electric-guitar" name="electric-guitar" {{ datIns.[0] }}>
+    <label for="electric-guitar">Electric Guitar</label>
+    <input type="checkbox" id="acoustic-guitar" name="acoustic-guitar" {{ datIns.[1] }}>
+    <label for="acoustic-guitar">Acoustic Guitar</label>
+    <input type="checkbox" id="bass" name="bass" {{ datIns.[2] }}>
+    <label for="bass">Bass</label>
+    <input type="checkbox" id="keyboard" name="keyboard" {{ datIns.[3] }}>
+    <label for="keyboard">Keyboard</label>
+    <input type="checkbox" id="piano" name="piano" {{ datIns.[4] }}>
+    <label for="piano">Piano</label>
+    <input type="checkbox" id="drums" name="drums" {{ datIns.[5] }}>
+    <label for="drums">Drums</label>
+    <input type="checkbox" id="vocal" name="vocal" {{ datIns.[6] }}>
+    <label for="vocal">Vocalist</label>
+    <input type="checkbox" id="violin" name="violin" {{ datIns.[7] }}>
+    <label for="violin">Violin</label>
+    <input type="checkbox" id="saxophone" name="saxophone" {{ datIns.[8] }}>
+    <label for="saxophone">Saxophone</label>
+    <input type="checkbox" id="flute" name="flute" {{ datIns.[9] }}>
+    <label for="flute">Flute</label>
+    <input type="checkbox" id="cello" name="cello" {{ datIns.[10] }}>
+    <label for="cello">Cello</label>
+    <input type="checkbox" id="clarinet" name="clarinet" {{ datIns.[11] }}>
+    <label for="clarinet">Clarinet</label>
+    <input type="checkbox" id="trumpet" name="trumpet" {{ datIns.[12] }}>
+    <label for="trumpet">Trumpet</label>
+    <input type="checkbox" id="harp" name="harp" {{ datIns.[13] }}>
+    <label for="harp">Harp</label>
+
+  </div>
 
   <br><br>
 
   <label for="about">About</label>
   <br>
-  <textarea name="about" id="about" cols="100" rows="10"></textarea>
+  <textarea name="about" id="about" cols="100" rows="10">{{data.biography}}</textarea>
 
   <br><br>
 
@@ -66,6 +73,6 @@
 
   <br><br>
 
-  <button type="submit">Edit account</button>
+  <button type="submit">Edit Profile</button>
 
 </form>
