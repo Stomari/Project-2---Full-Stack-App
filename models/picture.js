@@ -8,3 +8,6 @@ const pictureSchema = new Schema({
 }, {
     timestamps: true
   });
+
+  const Picture = mongoose.model("Picture", pictureSchema);
+  module.exports = Picture;
