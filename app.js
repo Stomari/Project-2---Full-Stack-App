@@ -78,9 +78,11 @@ app.use(passport.session());
 const index = require('./routes/index');
 const auth = require('./routes/auth');
 const profile = require('./routes/profile')
+const bands = require('./routes/bands')
 
 app.use('/', index);
 app.use('/', auth);
+app.use('/', bands);
 app.use('/', profile);
 
 app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
