@@ -10,6 +10,7 @@ const bandSchema = new Schema({
   genre: {
     type: Array,
   },
+  chatband: { type: [String], default: [] },
   members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   votes: { type: Number, default: 0 },
   votesValues: { type: Number, default: 0 },

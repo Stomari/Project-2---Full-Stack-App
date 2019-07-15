@@ -1,0 +1,16 @@
+<h1>{{band.bandname}}</h1>
+<h2>{{user.name}}</h2>
+{{#each band}}
+<h3>{{genre}}</h3>
+{{/each}}
+
+
+<form action="" method="post">
+  <label for="chatband" name="">{{user.name}}</label>
+  <textarea name="chatband" id="" cols="100" rows="5" placeholder="chatband">Enter your text for your band here =)</textarea>
+  <button type="submit">Submit</button>
+</form>
+
+{{#each band.chatband}}
+<p>{{this}}</p>
+{{/each}}

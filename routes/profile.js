@@ -1,7 +1,6 @@
 const express = require('express');
 const ensureLogin = require('connect-ensure-login');
 const User = require('../models/user');
-const check = require('../public/javascript/script')
 
 const router = express.Router();
 

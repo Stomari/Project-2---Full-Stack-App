@@ -10,7 +10,6 @@ const bcryptSalt = 10;
 
 router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
   const userID = req.user._id
-  console.log('USERID', userID)
   User.find(userID)
     .then(() => {
       Band.find({ leader: userID })
@@ -24,19 +23,11 @@ router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
 
 })
 
-router.get('/band-profile', ensureLoggedIn(), (req, res, next) => {
-  res.render('band/band-profile');
-})
-
-
 router.post('/create-band', (req, res, next) => {
   const { bandname, genre, biography } = req.body;
   const leader = req.user;
   const newBand = new Band({ bandname, leader, genre, biography });
   const userID = req.user._id;
-  console.log('MY USER: ', userID);
-  console.log('PARAMS: ', req.params.id);
-
 
   newBand.save()
     .then(() => {
@@ -44,14 +35,37 @@ router.post('/create-band', (req, res, next) => {
         .then()
         .catch(err => console.log(err))
 
-      res.redirect('/band-profile');
+      res.redirect('/band-profile/' + newBand._id);
     })
     .catch(err => console.log(err));
 
 }
 )
-
 router.get('/create-band', (req, res, next) => {
   res.render('band/create-band')
+})
+
+router.get('/band-profile/:bandID', (req, res, next) => {
+  const bandID = req.params.bandID;
+
+  Band.findById(bandID)
+    .then((band) => {
+      User.findById(band.leader)
+        .then((user) => {
+          res.render('band/band-profile', { band, user })
+        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
+router.post('/band-profile/:bandID', (req, res, next) => {
+  const bandID = req.params.bandID;
+  const { chatband } = req.body;
+  Band.findByIdAndUpdate(bandID, { $push: { chatband } })
+    .then(() => {
+      res.redirect('/band-profile/' + bandID)
+    })
+    .catch()
 })
 module.exports = router;
