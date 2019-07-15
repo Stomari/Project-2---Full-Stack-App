@@ -12,7 +12,7 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/signup', (req, res) => {
-  const { username, password, email, role } = req.body;
+  const { username, firstName, surname, age, password, email, role } = req.body;
 
   if (username === '' || password === '' || email === '') {
     res.render('auth/signup', { message: 'Indicate username, password and email are required' });
@@ -31,6 +31,9 @@ router.post('/signup', (req, res) => {
 
       const newUser = new User({
         username,
+        firstName,
+        surname,
+        age,
         password: hashPass,
         email,
         role,
@@ -52,11 +55,16 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true,
   passReqToCallback: true,
-}));
+}), (req, res) => {
+  if (req.user.firstTime) {
+    res.redirect('/instruments');
+  } else {
+    res.redirect('/');
+  }
+});
 
 router.get('/logout', (req, res) => {
   req.logout();
