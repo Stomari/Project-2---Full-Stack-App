@@ -12,7 +12,7 @@ router.get('/profile', ensureLogin.ensureLoggedIn(), (req, res) => {
 
 router.get('/profile/edit', ensureLogin.ensureLoggedIn(), (req, res) => {
   User.findById(req.user._id)
-    .then(data => res.render('profile/edit', data))
+    .then(data => res.render('profile/profile-edit', data))
     .catch(err => console.log(err));
 });
 
