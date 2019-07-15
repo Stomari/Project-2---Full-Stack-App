@@ -8,7 +8,7 @@ const bandSchema = new Schema({
   genre: {
     type: Array,
   },
-  members: { type: Schema.Types.ObjectId, ref: 'User' },
+  members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   votes: Number,
   votesValues: Number,
 }, {

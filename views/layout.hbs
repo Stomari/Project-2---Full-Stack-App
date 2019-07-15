@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="stylesheet/style.css">
-  <title>Project 2</title> 
-  {{!-- MUDAR O NOME DEPOIS #################### --}}
+  <title>Musikick</title>
+  {{!-- TA MUDADO VOU NEM CONSULTAR O SÓCIO --}}
 </head>
+
 <body>
+  <nav>
+    <a href="/">HOME</a>
+    <a href="/login">Login</a>
+    <a href="/signup">Sign up</a>
+
+    <div class="dropdown">
+      <button class="dropbtn">Infos</button>
+      <div class="dropdown-content">
+        <a href="/profile">My Profile</a>
+        <a href="/bands">My Bands</a>
+        {{!-- Input "if logged appears logout logic later" --}}
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+  </nav>
   {{{body}}}
+  <footer>
+    {{!-- footer content --}}
+  </footer>
 </body>
+
 </html>
