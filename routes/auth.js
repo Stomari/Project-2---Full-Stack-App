@@ -38,7 +38,6 @@ router.post('/signup', (req, res) => {
         email,
         role,
       });
-      console.log(newUser)
       newUser.save((err) => {
         if (err) {
           res.render('auth/signup', { message: 'Something went wrong' });
@@ -59,8 +58,11 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true,
   passReqToCallback: true,
 }), (req, res) => {
-  if (req.user.firstTime) {
-    res.redirect('/instruments');
+  console.log(req.user.firstTime)
+  if (!req.user.firstTime) {
+    User.update( { _id: req.user.id }, { firstTime: true })
+      .then(() => res.redirect('/profile/edit'))
+      .catch(err => console.log(err));
   } else {
     res.redirect('/');
   }
