@@ -1,3 +1,6 @@
 <h1>My bands</h1>
-
+{{#each bands}}
+<p>{{bandname}}- {{genre}}</p>
+<textarea name="" id="" cols="30" rows="10">{{biography}}</textarea>
+{{/each}}
 <a href="/create-band">Create a new band!</a>

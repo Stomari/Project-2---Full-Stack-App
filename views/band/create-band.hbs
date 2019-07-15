@@ -1,10 +1,12 @@
-<form action="" method="post" enctype="multipart/form-data">
-<label for="band-pic">Choose a nice image for your band !</label>
-<input type="file" name="" id="">
-  <label for="">Name: </label>
-  <input type="text" name="bandname">
-  <label for="">Biography: </label>
-  <textarea name="biography" id="bio-band" cols="100" rows="20"></textarea>
-  <label for="">Genre: </label>
-  <input type="text" name="bandname">
+<form action="/create-band" method="post">
+<input type="hidden" name="leader" value="{{user._id}}">
+<label for="bandlogo">Choose your logo: </label>
+<input type="file" name="bandlogo" id="band-logo">
+<label for="bandname">Band name: </label>
+<input type="text" name="bandname" id="">
+<label for="genre">Genre: </label>
+<input type="text" name="genre" id="">
+<label for="biography">Biography: </label>
+<textarea name="biography" id="band-bio" cols="100" rows="10"> </textarea>
+<button type="submit">Create my band!</button>
 </form>
