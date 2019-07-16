@@ -10,7 +10,9 @@ const userSchema = new Schema({
     enum: ['GUEST', 'EDITOR', 'ADMIN'],
     default: 'GUEST',
   },
-  picture: [{ type: Schema.Types.ObjectId, ref: 'Picture' }],
+  invites: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
+  picture: [{ type: Schema.Types.ObjectId, ref: 'Picture', default: [] }],
+  profilePic: { type: Schema.Types.ObjectId, ref: 'Picture' },
   name: { type: String, required: true },
   surname: { type: String, required: true },
   age: { type: Number, required: true },
@@ -19,13 +21,13 @@ const userSchema = new Schema({
     type: [String], default: [],
   },
   bands: [{ type: Schema.Types.ObjectId, ref: 'Band', default: [] }],
-  votes: { type: Number, default: 0 },
+  votes: { type: [Number], votes: [Number] },
   votesValues: { type: Number, default: 0 },
-  friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  friends: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
   firstTime: { type: Boolean, default: false },
 }, {
-  timestamps: true,
-});
+    timestamps: true,
+  });
 
 const User = mongoose.model('User', userSchema);
 

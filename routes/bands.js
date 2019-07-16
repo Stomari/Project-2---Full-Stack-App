@@ -8,12 +8,14 @@ const Band = require('../models/band');
 const router = express.Router();
 const bcryptSalt = 10;
 
+
 router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
   const userID = req.user._id
   User.find(userID)
     .then(() => {
-      Band.find({ leader: userID })
+      Band.find({ members: userID })
         .then(bands => {
+          console.log(bands)
           res.render('band/band-page', { bands });
         })
         .catch(err => console.log(err))
@@ -26,9 +28,11 @@ router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
 router.post('/create-band', (req, res, next) => {
   const { bandname, genre, biography } = req.body;
   const leader = req.user;
-  const newBand = new Band({ bandname, leader, genre, biography });
+  const members = []
+  members.push(leader);
+  console.log(members)
+  const newBand = new Band({ bandname, leader, genre, biography, members });
   const userID = req.user._id;
-
   newBand.save()
     .then(() => {
       User.findByIdAndUpdate(userID, { $push: { bands: newBand } })
