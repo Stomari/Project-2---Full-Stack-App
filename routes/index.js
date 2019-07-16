@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
       User.findById(req.user.id)
         .populate('bands')
         .then(user => {
-          console.log(user)
           res.render('index', { data, user });
         })
         .catch(err => console.log(err));

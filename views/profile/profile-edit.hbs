@@ -1,6 +1,6 @@
 <h2>Edit</h2>
 
-<form action="/profile/edit" method="POST" id="form-container">
+<form action="/profile/edit" method="POST" id="form-container" enctype="multipart/form-data">
 
   <label for="name">First Name</label>
   <input id="firstName" type="text" name="name" value="{{data.name}}">
@@ -64,7 +64,7 @@
   <br><br>
 
   <label>Profile Picture</label>
-  <input type="file" name="image">
+  <input type="file" name="photo">
 
   <br><br>
 
