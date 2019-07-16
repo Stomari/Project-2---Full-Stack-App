@@ -24,6 +24,9 @@ router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
     .catch(err => console.log(err))
 
 })
+router.get('/create-band', ensureLoggedIn('login'), (req, res, next) => {
+  res.render('band/create-band')
+})
 
 router.post('/create-band', (req, res, next) => {
   const { bandname, genre, biography } = req.body;
@@ -45,9 +48,6 @@ router.post('/create-band', (req, res, next) => {
 
 }
 )
-router.get('/create-band', (req, res, next) => {
-  res.render('band/create-band')
-})
 
 router.get('/band-profile/:bandID', (req, res, next) => {
   const bandID = req.params.bandID;
