@@ -1,9 +1,20 @@
 const express = require('express');
+const User = require('../models/user');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('index');
+  User.find()
+    .then((data) => {
+      User.findById(req.user.id)
+        .populate('bands')
+        .then(user => {
+          console.log(user)
+          res.render('index', { data, user });
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
 });
 
 module.exports = router;

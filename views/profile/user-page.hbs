@@ -1,5 +1,5 @@
-<div>
-  <h3>{{name}} {{surname}}</h3>
+<div id="user-card">
+  <h3 class="name">{{name}} {{surname}}</h3>
   <p>{{age}}</p>
   <p>{{username}}</p>
   <ul>
@@ -9,4 +9,12 @@
   </ul>
   <p>{{biography}}</p>
   <a href="/profile/edit"><button>EDIT</button></a>
+  <br>
+  <br>
+  <h2>{{usernamer}} bands:</h2>
+  <div>
+    {{#each bands}}
+    {{this.bandname}}
+    {{/each}}
+  </div>
 </div>

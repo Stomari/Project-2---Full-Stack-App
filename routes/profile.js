@@ -6,7 +6,11 @@ const router = express.Router();
 
 router.get('/profile', ensureLogin.ensureLoggedIn(), (req, res) => {
   User.findById(req.user._id)
-    .then(data => res.render('profile/user-page', data))
+    .populate('bands')
+    .then(data => {
+      console.log(data)
+      res.render('profile/user-page', data)
+    }) 
     .catch(err => console.log(err));
 });
 
@@ -15,8 +19,6 @@ router.get('/profile/edit', ensureLogin.ensureLoggedIn(), (req, res) => {
     .then((data) => {
       let datIns = [];
       const inst = ['electric-guitar', 'acoustic-guitar', 'bass', 'keyboard', 'piano', 'drums', 'vocal', 'violin', 'saxophone', 'flute', 'cello', 'clarinet', 'trumpet', 'harp'];
-      // data.ins = ['checked','', 'checked']
-      console.log(data.instruments)
       inst.forEach(element => {
         if(data.instruments.includes(element)){
           datIns.push('checked')
@@ -29,7 +31,7 @@ router.get('/profile/edit', ensureLogin.ensureLoggedIn(), (req, res) => {
 });
 
 router.post('/profile/edit', (req, res) => {
-  const { username, email, picture, name, surname, age, about } = req.body;
+  const { email, picture, name, surname, age, about } = req.body;
   const instruments = ['electric-guitar', 'acoustic-guitar', 'bass', 'keyboard', 'piano', 'drums', 'vocal', 'violin', 'saxophone', 'flute', 'cello', 'clarinet', 'trumpet', 'harp'];
   const userInstruments = [];
   instruments.forEach((el, i) => {
@@ -40,7 +42,7 @@ router.post('/profile/edit', (req, res) => {
 
   console.log(userInstruments)
 
-  User.update({ _id: req.user.id }, { $set: { username, email, picture, name, surname, age, biography: about, instruments: userInstruments } })
+  User.update({ _id: req.user.id }, { $set: { email, picture, name, surname, age, biography: about, instruments: userInstruments } })
     .then(() => {
       res.redirect('/profile');
     })
