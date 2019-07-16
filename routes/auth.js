@@ -7,7 +7,7 @@ const User = require('../models/user');
 const router = express.Router();
 const bcryptSalt = 10;
 
-router.get('/signup', (req, res) => {
+router.get('/signup', ensureLoggedOut(), (req, res) => {
   res.render('auth/signup');
 });
 
@@ -63,7 +63,7 @@ router.post('/login', passport.authenticate('local', {
   passReqToCallback: true,
 }), (req, res) => {
   if (!req.user.firstTime) {
-    User.update( { _id: req.user.id }, { firstTime: true })
+    User.update({ _id: req.user.id }, { firstTime: true })
       .then(() => res.redirect('/profile/edit'))
       .catch(err => console.log(err));
   } else {
