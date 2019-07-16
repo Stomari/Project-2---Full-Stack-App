@@ -1,5 +1,6 @@
 body {
-  color: red;
+  color: white;
+  background-color: black;
 }
 
 /* Dropdown Button */
@@ -42,3 +43,15 @@ body {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+.content {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5%;
+}
+
+#user-card {
+  background-color: grey;
+  width: 80%;
+  height: 50rem;
+}
