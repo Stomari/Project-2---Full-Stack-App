@@ -1,14 +1,16 @@
 const express = require('express');
 const ensureLogin = require('connect-ensure-login');
+const multer  = require('multer');
 const User = require('../models/user');
+const Picture = require('../models/picture');
+const uploadCloud = require('../public/config/cloudinary');
 
 const router = express.Router();
 
 router.get('/profile', ensureLogin.ensureLoggedIn(), (req, res) => {
   User.findById(req.user._id)
-    .populate('bands')
+    .populate('bands picture')
     .then(data => {
-      console.log(data)
       res.render('profile/user-page', data)
     }) 
     .catch(err => console.log(err));
@@ -24,14 +26,14 @@ router.get('/profile/edit', ensureLogin.ensureLoggedIn(), (req, res) => {
           datIns.push('checked')
         } else datIns.push('')
       });
-      console.log(datIns);
       res.render('profile/profile-edit', {data, datIns})
     })
     .catch(err => console.log(err));
 });
 
-router.post('/profile/edit', (req, res) => {
-  const { email, picture, name, surname, age, about } = req.body;
+router.post('/profile/edit', uploadCloud.single('photo'), (req, res) => {
+  const { email, name, surname, age, about } = req.body;
+  const imgPath = req.file.url;
   const instruments = ['electric-guitar', 'acoustic-guitar', 'bass', 'keyboard', 'piano', 'drums', 'vocal', 'violin', 'saxophone', 'flute', 'cello', 'clarinet', 'trumpet', 'harp'];
   const userInstruments = [];
   instruments.forEach((el, i) => {
@@ -40,14 +42,15 @@ router.post('/profile/edit', (req, res) => {
     }
   });
 
-  console.log(userInstruments)
-
-  User.update({ _id: req.user.id }, { $set: { email, picture, name, surname, age, biography: about, instruments: userInstruments } })
+  const newPhoto = new Picture({ path: imgPath });
+  newPhoto.save();
+  
+  User.update({ _id: req.user.id }, { $set: { email, name, surname, age, biography: about, instruments: userInstruments, profilePic: newPhoto }, $push: { picture: newPhoto } })
     .then(() => {
       res.redirect('/profile');
     })
     .catch((error) => {
-      console.log(error);
+      console.log('Error: ', error);
     });
 })
 

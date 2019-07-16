@@ -18,6 +18,10 @@ router.post('/signup', (req, res) => {
     res.render('auth/signup', { message: 'Indicate username, password and email are required' });
     return;
   }
+  if (typeof parseInt(age) !== 'number') {
+    res.render('auth/signup', { message: 'Indicate age with a number' });
+    return;
+  }
 
   User.findOne({ username })
     .then((user) => {
