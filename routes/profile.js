@@ -1,6 +1,6 @@
 const express = require('express');
 const ensureLogin = require('connect-ensure-login');
-const multer  = require('multer');
+const multer = require('multer');
 const User = require('../models/user');
 const Picture = require('../models/picture');
 const uploadCloud = require('../public/config/cloudinary');
@@ -12,7 +12,7 @@ router.get('/profile', ensureLogin.ensureLoggedIn(), (req, res) => {
     .populate('bands picture')
     .then(data => {
       res.render('profile/user-page', data)
-    }) 
+    })
     .catch(err => console.log(err));
 });
 
@@ -22,18 +22,17 @@ router.get('/profile/edit', ensureLogin.ensureLoggedIn(), (req, res) => {
       let datIns = [];
       const inst = ['electric-guitar', 'acoustic-guitar', 'bass', 'keyboard', 'piano', 'drums', 'vocal', 'violin', 'saxophone', 'flute', 'cello', 'clarinet', 'trumpet', 'harp'];
       inst.forEach(element => {
-        if(data.instruments.includes(element)){
+        if (data.instruments.includes(element)) {
           datIns.push('checked')
         } else datIns.push('')
       });
-      res.render('profile/profile-edit', {data, datIns})
+      res.render('profile/profile-edit', { data, datIns })
     })
     .catch(err => console.log(err));
 });
 
 router.post('/profile/edit', uploadCloud.single('photo'), (req, res) => {
   const { email, name, surname, age, about } = req.body;
-  const imgPath = req.file.url;
   const instruments = ['electric-guitar', 'acoustic-guitar', 'bass', 'keyboard', 'piano', 'drums', 'vocal', 'violin', 'saxophone', 'flute', 'cello', 'clarinet', 'trumpet', 'harp'];
   const userInstruments = [];
   instruments.forEach((el, i) => {
@@ -42,9 +41,14 @@ router.post('/profile/edit', uploadCloud.single('photo'), (req, res) => {
     }
   });
 
+  let imgPath = '';
+  if (req.file !== undefined) {
+    imgPath = req.file.url;
+  }
   const newPhoto = new Picture({ path: imgPath });
   newPhoto.save();
-  
+
+
   User.update({ _id: req.user.id }, { $set: { email, name, surname, age, biography: about, instruments: userInstruments, profilePic: newPhoto }, $push: { picture: newPhoto } })
     .then(() => {
       res.redirect('/profile');
