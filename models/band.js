@@ -6,13 +6,13 @@ const bandSchema = new Schema({
   bandname: { type: String, required: true },
   biography: { type: String, default: 'We are a band !' },
   leader: { type: Schema.Types.ObjectId, ref: 'User' },
-  picture: { type: Schema.Types.ObjectId, ref: 'Picture' },
+  picture: { type: Schema.Types.ObjectId, ref: 'Picture'},
   genre: {
     type: Array,
   },
   chatband: { type: [String], default: [] },
-  members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  votes: { type: Number, default: 0 },
+  members: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
+  votes: { type: [Number], votes: [Number] },
   votesValues: { type: Number, default: 0 },
 }, {
     timestamps: true,

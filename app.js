@@ -15,7 +15,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/user');
-
+mongoose.set('useFindAndModify', false);
 // Mongoose Setup
 mongoose
   .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
