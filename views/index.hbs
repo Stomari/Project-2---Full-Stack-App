@@ -7,7 +7,9 @@
   {{#each data}}
   <li>
 
-    <p>{{username}} <form action="/" method="post">
+    <p>
+      <a href="/profile/{{id}}">{{username}}</a>
+      <form action="/" method="post">
         <input type="hidden" name="userID" value="{{_id}}">
         <button type="submit">Invite</button>
       </form>

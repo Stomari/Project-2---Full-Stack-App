@@ -1,25 +1,27 @@
 <div id="user-card">
   <div>
-  {{#if profilePic.path}}
-  <img id="profile-pic" src="{{profilePic.path}}" alt="">
+  {{#if data.profilePic}}
+  <img id="profile-pic" src="{{data.profilePic.path}}" alt="">
   {{/if}}
   </div>
   <div class="info">
-    <h3 class="name">{{name}} {{surname}}</h3>
-    <p>{{age}}</p>
-    <p>{{username}}</p>
+    <h3 class="name">{{data.name}} {{data.surname}}</h3>
+    <p>{{data.age}}</p>
+    <p>{{data.username}}</p>
     <ul>
-      {{#each instruments}}
+      {{#each data.instruments}}
       <li>{{this}}</li>
       {{/each}}
     </ul>
-    <p>{{biography}}</p>
+    <p>{{data.biography}}</p>
+    {{#if user}}
     <a href="/profile/edit"><button>EDIT</button></a>
+    {{/if}}
     <br>
     <br>
-    <h2>{{username}} bands:</h2>
+    <h2>{{data.username}} bands:</h2>
     <div>
-      {{#each bands}}
+      {{#each data.bands}}
       {{this.bandname}}
       {{/each}}
     </div>
