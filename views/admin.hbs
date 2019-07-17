@@ -1,0 +1,15 @@
+<div>
+  {{#each data}}
+  <a href="/profile/{{this.id}}">{{this.username}}</a>
+  <form action="/change-role" method="POST">
+  <select name="role">
+    <option value="GUEST">GUEST</option>
+    <option value="EDITOR">EDITOR</option>
+  </select>
+  <input type="hidden" name="userID" value="{{this.id}}">
+  <button type="submit">SUBMIT CHANGE</button>
+  </form>
+  <a href="/delete/{{this.id}}"><button>DELETE USER</button></a>
+  <br>
+  {{/each}}
+</div>

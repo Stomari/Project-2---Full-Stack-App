@@ -9,6 +9,16 @@ const uploadCloud = require('../public/config/cloudinary');
 
 const router = express.Router();
 
+const checkRoles = (role) => {
+  return (req, res, next) => {
+    if (req.isAuthenticated() && req.user.role === role || req.isAuthenticated() && req.user.role === 'ADMIN') {
+      return next();
+    } else {
+      res.redirect('/news')
+    }
+  }
+}
+
 // CURRENT LOGGED USER PAGE
 router.get('/profile', ensureLogin.ensureLoggedIn(), (req, res) => {
   User.findById(req.user._id)
@@ -81,7 +91,7 @@ router.get('/profile/:id', (req, res) => {
       User.findById(user.id)
         .populate('bands picture')
         .then(userData => {
-          data.rating = data.votesValues.reduce((total, num) => total + num) / data.votes.length
+          data.rating = data.votesValues.reduce((total, num) => total + num, 0) / data.votes.length
           console.log(data.rating);
           res.render('profile/musician-page', { data, userData, user })
         })
@@ -132,6 +142,27 @@ router.post('/vote/:votedUser', ensureLogin.ensureLoggedIn('login'), (req, res) 
       }
     })
     .catch(err => console.log(err))
+})
+
+// ADMIN PAGE
+router.get('/admin', checkRoles('ADMIN'), ensureLogin.ensureLoggedIn('login'), (req, res) => {
+  User.find({ _id: { $ne: req.user.id } })
+    .then((data) => {
+      res.render('admin', { data });
+    })
+    .catch(err => console.log(err));
+})
+
+router.post('/change-role', checkRoles('ADMIN'), ensureLogin.ensureLoggedIn('login'), (req, res) => {
+  User.findByIdAndUpdate(req.body.userID, { role: req.body.role })
+    .then(() => res.redirect('/admin'))
+    .catch(err => console.log(err));
+})
+
+router.get('/delete/:userID', checkRoles('ADMIN'), ensureLogin.ensureLoggedIn('login'), (req, res) => {
+  User.findByIdAndDelete(req.params.userID)
+    .then(() => res.redirect('/admin'))
+    .catch(err => console.log(err));
 })
 
 module.exports = router;
