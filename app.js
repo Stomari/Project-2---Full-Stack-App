@@ -79,11 +79,13 @@ const index = require('./routes/index');
 const auth = require('./routes/auth');
 const profile = require('./routes/profile');
 const bands = require('./routes/bands');
-const search = require('./routes/search')
+const search = require('./routes/search');
+const news = require('./routes/news');
 app.use('/', index);
 app.use('/', auth);
 app.use('/', bands);
 app.use('/', profile);
 app.use('/', search);
+app.use('/', news);
 
 app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));

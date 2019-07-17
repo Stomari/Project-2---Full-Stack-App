@@ -1,0 +1,37 @@
+<div>
+  <form action="/search/users" method="POST">
+
+    <h2>Search:</h2>
+
+    <h3>Choose the instrument:</h3>
+
+    <select name="instruments" id="instruments">
+      <option value="electric-guitar">Electric Guitar</option>
+      <option value="acoustic-guitar">Acoustic Guitar</option>
+      <option value="bass">Bass</option>
+      <option value="keyboard">Keyboard</option>
+      <option value="piano">Piano</option>
+      <option value="drums">Drums</option>
+      <option value="vocal">Vocalist</option>
+      <option value="violin">Violin</option>
+      <option value="saxophone">Saxophone</option>
+      <option value="flute">Flute</option>
+      <option value="cello">Cello</option>
+      <option value="clarinet">Clarinet</option>
+      <option value="trumpet">Trumpet</option>
+      <option value="harp">Harp</option>
+    </select>
+
+    <button type="submit">GO!</button>
+  </form>
+</div>
+
+<div class="search-result">
+  {{#each data}}
+  <a href="/profile/{{id}}">
+    <div class="musician-card">
+      <p>{{this.username}}</p>
+    </div>
+  </a>
+  {{/each}}
+</div>

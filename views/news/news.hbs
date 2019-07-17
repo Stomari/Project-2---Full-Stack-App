@@ -1,0 +1,22 @@
+<div class="header">
+  <h1>News:</h1>
+  <h4>The latest articles from our editors!</h4>
+</div>
+<div class="all-news">
+  {{#each data}}
+  <div class="news">
+    {{#if this.image}}
+    <img src="{{this.image.path}}">
+    {{/if}}
+    <a href="/news/{{this.id}}"><h2>{{this.title}}</h2></a>
+    <p>By {{this.writer.name}} {{this.writer.surname}}</p>
+    <p>{{this.abstract}}</p>
+    {{/each}}
+  </div>
+</div>
+
+{{#if user.editor}}
+<h3>Editor's menu:</h3>
+<a href="/news/create"><button>Create article</button></a>
+<a href="/news/your-articles"><button>Your articles</button></a>
+{{/if}}

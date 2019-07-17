@@ -1,9 +1,33 @@
-  <ul>
-    {{#each data}}
-    <li>
-      <p>
-        <a href="/profile/{{id}}">{{username}}</a>
-      </p>
-    </li>
-    {{/each}}
-  </ul>
+<div>
+  <form action="/search/bands" method="POST">
+
+    <h2>Search:</h2>
+
+    <h3>Choose the genre:</h3>
+
+    <select name="genres" id="genres">
+      <option value="rock">Rock</option>
+      <option value="country">Country</option>
+      <option value="pop">Pop</option>
+      <option value="jazz">Jazz</option>
+      <option value="hip-hop">Hip Hop</option>
+      <option value="folk">Folk</option>
+      <option value="electronic">Electronic</option>
+      <option value="blues">Blues</option>
+      <option value="instrumental">Instrumental</option>
+      <option value="gospel">Gospel</option>
+    </select>
+
+    <button type="submit">GO!</button>
+  </form>
+</div>
+
+<div class="search-result">
+  {{#each data}}
+  <a href="/band-profile/{{this.id}}">
+    <div class="band-card">
+      <p>{{this.bandname}}</p>
+    </div>
+  </a>
+  {{/each}}
+</div>

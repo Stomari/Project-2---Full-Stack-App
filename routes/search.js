@@ -5,20 +5,41 @@ const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 
 const router = express.Router();
 
+// SEARCH ROUTE
 router.get('/search', ensureLoggedIn('login'), (req, res) => {
-  User.find({ _id: { $ne: req.user.id } })
-    .then((data) => {
-      User.findById(req.user.id)
-        .populate('bands')
-        .then(user => {
-          res.render('band/band-search', { data, user });
-        })
-        .catch(err => console.log(err));
-    })
-    .catch(err => console.log(err));
+  const user = req.user;
+  res.render('search', { user });
 });
 
-router.post('/invite', ensureLoggedIn('login'), (req, res) => {
+router.get('/search/users', ensureLoggedIn('login'), (req, res) => {
+  const user = req.user;
+  res.render('profile/musician-search', { user });
+});
+
+router.post('/search/users', (req, res) => {
+  User.find({ instruments: req.body.instruments, _id: { $ne: req.user.id } })
+    .then(data => {
+      res.render('profile/musician-search', { data })
+    })
+    .catch(err => console.log(err));
+})
+
+router.get('/search/bands', ensureLoggedIn('login'), (req, res) => {
+  const user = req.user;
+  res.render('band/band-search', { user });
+});
+
+
+router.post('/search/bands', (req, res) => {
+  Band.find({ genre: req.body.genres })
+    .then(data => {
+      res.render('band/band-search', { data })
+    })
+    .catch(err => console.log(err));
+})
+
+// USER INVITATION
+router.post('/invitation', ensureLoggedIn('login'), (req, res) => {
   const { userID, bands } = req.body;
   const { _id } = req.user;
 
