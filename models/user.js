@@ -21,8 +21,8 @@ const userSchema = new Schema({
     type: [String], default: [],
   },
   bands: [{ type: Schema.Types.ObjectId, ref: 'Band', default: [] }],
-  votes: { type: [Number], votes: [Number] },
-  votesValues: { type: Number, default: 0 },
+  votes: { type: [String], default: [] },
+  votesValues: { type: [Number], default: [] },
   friends: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
   firstTime: { type: Boolean, default: false },
 }, {
