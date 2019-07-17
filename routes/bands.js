@@ -8,36 +8,53 @@ const Band = require('../models/band');
 const router = express.Router();
 const bcryptSalt = 10;
 
-
+// User band pages
 router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
   const user = req.user._id
   User.find(user)
     .then(() => {
       Band.find({ members: user })
         .then(bands => {
-          console.log(bands)
+          bands.forEach(band => {
+            band.isLeader = false;
+            if (band.leader.toString() === user.toString()) band.isLeader = true;
+          });
           res.render('band/band-page', { bands, user });
         })
         .catch(err => console.log(err))
-
     })
     .catch(err => console.log(err))
-
 })
+
+// Delete band
+router.post('/delete-band/:bandID', ensureLoggedIn(), (req, res, next) => {
+  const { bandID } = req.params
+  Band.findByIdAndDelete(bandID)
+    .then(() => res.redirect('/mybands'))
+    .catch(err => console.log(err))
+})
+
+// Create a band
 router.get('/create-band', ensureLoggedIn('login'), (req, res, next) => {
+  let user = req.user._id
   User.find(req.user._id)
-    .then(() => res.render('band/create-band'))
+    .then((user) => res.render('band/band-create', { user }))
     .catch(err => console.log(err))
 
 })
-
 router.post('/create-band', ensureLoggedIn('login'), (req, res, next) => {
-  const { bandname, genre, biography } = req.body;
+  const { bandname, biography } = req.body;
+  const genres = ['rock', 'country', 'pop', 'jazz', 'hip-hop', 'folk', 'electronic', 'blues', 'instrumental', 'gospel'];
+  const userGenres = []
+  genres.forEach((el, i) => {
+    if (req.body[el]) {
+      userGenres.push(genres[i]);
+    }
+  });
   const leader = req.user;
   const members = []
   members.push(leader);
-  console.log(members)
-  const newBand = new Band({ bandname, leader, genre, biography, members });
+  const newBand = new Band({ bandname, leader, genre: userGenres, biography, members });
   const userID = req.user._id;
   newBand.save()
     .then(() => {
@@ -48,31 +65,75 @@ router.post('/create-band', ensureLoggedIn('login'), (req, res, next) => {
       res.redirect('/band-profile/' + newBand._id);
     })
     .catch(err => console.log(err));
+})
 
-}
-)
-
-router.get('/band-profile/:bandID', (req, res, next) => {
+// Edit a band
+router.get('/band-edit/:bandID', ensureLoggedIn('login'), (req, res, next) => {
   const bandID = req.params.bandID;
+  const genres = ['rock', 'country', 'pop', 'jazz', 'hip-hop', 'folk', 'electronic', 'blues', 'instrumental', 'gospel'];
   let user;
   if (req.user) user = req.user._id;
   Band.findById(bandID)
     .then((band) => {
-      User.find()
-        .then((users) => {
+      User.find({ _id: { $in: band.members, $ne: band.leader } })
+        .then(users => {
           let x = true;
-          console.log(band.members.includes(user))
-          if (!band.members.includes(user)) { x = false }
-          console.log(x);
-          
-          res.render('band/band-profile', { band, user, users, x })
+          let datIns = []
+          users.forEach(user => user.bandDelete = bandID)
+          genres.forEach(element => band.genre.includes(element) ? datIns.push('checked') : datIns.push(''))
+          if (band.members.includes(user)) res.render('band/band-edit', { user, users, band, datIns })
+          else res.redirect('/mybands')
         })
         .catch(err => console.log(err))
     })
     .catch(err => console.log(err))
 })
 
-router.post('/band-profile/:bandID', (req, res, next) => {
+router.post('/band-edit/:bandID', ensureLoggedIn(), (req, res, next) => {
+  const bandID = req.params.bandID;
+  const { bandname } = req.body
+  const genres = ['rock', 'country', 'pop', 'jazz', 'hip-hop', 'folk', 'electronic', 'blues', 'instrumental', 'gospel'];
+  let user;
+  const newGenres = []
+  genres.forEach((el, i) => req.body[el] ? newGenres.push(genres[i]) : false)
+  if (req.user) user = req.user._id;
+  Band.findByIdAndUpdate(bandID, { $set: { bandname, genre: newGenres } })
+    .then(() => res.redirect('/mybands'))
+    .catch(err => console.log(err))
+})
+
+// delete members from band
+router.post('/delete-member/:userID', ensureLoggedIn(), (req, res, next) => {
+  const userID = req.params.userID;
+  const { bandID } = req.body;
+
+  Band.findByIdAndUpdate(bandID, { $pull: { members: userID } })
+    .then(() => res.redirect('/band-edit/' + bandID))
+    .catch(err => console.log(err))
+
+})
+
+// See band profile
+router.get('/band-profile/:bandID', (req, res, next) => {
+  const bandID = req.params.bandID;
+  let user;
+  if (req.user) user = req.user._id;
+  Band.findById(bandID)
+    .then((band) => {
+      User.find({ _id: { $in: band.members } })
+        .then(users => {
+          let x = true;
+          // Check if user is a member so he can post in the band chat
+          if (!band.members.includes(user)) { x = false }
+          res.render('band/band-profile', { band, user, users, x })
+        })
+        .catch(err => console.log(err))
+
+    })
+    .catch(err => console.log(err))
+})
+
+router.post('/band-profile/:bandID', ensureLoggedIn('login'), (req, res, next) => {
   const bandID = req.params.bandID;
   const { chatband } = req.body;
   Band.findByIdAndUpdate(bandID, { $push: { chatband } })

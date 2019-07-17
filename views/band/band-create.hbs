@@ -1,0 +1,31 @@
+<form action="/create-band" method="post">
+  <input type="hidden" name="leader">
+  <input type="hidden" name="members">
+  <label for="bandlogo">Choose your logo: </label>
+  <input type="file" name="bandlogo" id="band-logo">
+  <label for="bandname">Band name: </label>
+  <input type="text" name="bandname" id="">
+  <p>Genres: </p>
+  <input type="checkbox" id="rock" name="rock">
+  <label for="rock">Rock</label>
+  <input type="checkbox" id="country" name="country">
+  <label for="country">Country</label>
+  <input type="checkbox" id="pop" name="pop">
+  <label for="pop">Pop</label>
+  <input type="checkbox" id="jazz" name="jazz">
+  <label for="jazz">Jazz</label>
+  <input type="checkbox" id="hip-hop" name="hip-hop">
+  <label for="hip-hop">Hip Hop</label>
+  <input type="checkbox" id="folk" name="folk">
+  <label for="folk">Folk</label>
+  <input type="checkbox" id="electronic" name="electronic">
+  <label for="electronic">Electronic</label>
+  <input type="checkbox" id="blues" name="blues">
+  <label for="blues">Blues</label>
+  <input type="checkbox" id="instrumental" name="instrumental">
+  <label for="instrumental">Instrumental</label>
+  <input type="checkbox" id="gospel" name="gospel">
+  <label for="gospel">Gospel</label>
+  <textarea name="biography" id="band-bio" cols="100" rows="10"> </textarea>
+  <button type="submit">Create my band!</button>
+</form>

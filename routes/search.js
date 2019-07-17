@@ -1,6 +1,5 @@
 const express = require('express');
 const User = require('../models/user');
-const Band = require('../models/band');
 const Invite = require('../models/invite');
 const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 
@@ -19,7 +18,7 @@ router.get('/search', ensureLoggedIn('login'), (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.post('/invite', (req, res) => {
+router.post('/invite', ensureLoggedIn('login'), (req, res) => {
   const { userID, bands } = req.body;
   const { _id } = req.user;
 
