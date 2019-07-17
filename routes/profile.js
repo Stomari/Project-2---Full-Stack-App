@@ -88,7 +88,7 @@ router.get('/profile/:id', (req, res) => {
 })
 
 // INVITES PAGE
-router.get('/invites', (req, res) => {
+router.get('/invites',ensureLogin.ensureLoggedIn('login'), (req, res) => {
   User.findById(req.user._id)
     .populate('bands picture profilePic').populate({ path: 'invites', populate: [{ path: 'owner' }, { path: 'bandInvite' }] })
     .then(data => {

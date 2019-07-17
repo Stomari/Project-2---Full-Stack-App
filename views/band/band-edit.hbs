@@ -1,0 +1,39 @@
+<form action="/band-edit/{{band._id}}" method="POST">
+  <label for="bandlogo">Change your logo: </label>
+  <input type="file" name="bandlogo" id="band-logo">
+  <label for="bandname">Band name: </label>
+  <input type="text" name="bandname" id="band-name" value="{{band.bandname}}">
+  <p>Genres: </p>
+  <input type="checkbox" id="rock" name="rock" {{datIns.[0]}}>
+  <label for="rock">Rock</label>
+  <input type="checkbox" id="country" name="country" {{datIns.[1]}}>
+  <label for="country">Country</label>
+  <input type="checkbox" id="pop" name="pop" {{datIns.[2]}}>
+  <label for="pop">Pop</label>
+  <input type="checkbox" id="jazz" name="jazz" {{datIns.[3]}}>
+  <label for="jazz">Jazz</label>
+  <input type="checkbox" id="hip-hop" name="hip-hop" {{datIns.[4]}}>
+  <label for="hip-hop">Hip Hop</label>
+  <input type="checkbox" id="folk" name="folk" {{datIns.[5]}}>
+  <label for="folk">Folk</label>
+  <input type="checkbox" id="electronic" name="electronic" {{datIns.[6]}}>
+  <label for="electronic">Electronic</label>
+  <input type="checkbox" id="blues" name="blues" {{datIns.[7]}}>
+  <label for="blues">Blues</label>
+  <input type="checkbox" id="instrumental" name="instrumental" {{datIns.[8]}}>
+  <label for="instrumental">Instrumental</label>
+  <input type="checkbox" id="gospel" name="gospel" {{datIns.[9]}}>
+  <label for="gospel">Gospel</label>
+  <button type="submit">Edit band!</button>
+</form>
+
+
+
+  {{#each users}}
+  <form action="/delete-member/{{this._id}}" method="POST">
+    <input type="hidden" name="bandID" value="{{this.bandDelete}}">
+    <label for="member">{{this.name}}</label>
+    <input type="hidden" name="member" value="{{this._id}}">
+    <button type="submit">Delete member!</button>
+  </form>
+  {{/each}}
