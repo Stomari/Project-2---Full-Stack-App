@@ -53,7 +53,7 @@ router.post('/profile/edit', uploadCloud.single('photo'), (req, res) => {
     imgPath = req.file.url;
     newPhoto = new Picture({ path: imgPath });
     newPhoto.save();
-    User.update({ _id: req.user.id }, { $set: { email, name, surname, age, biography: about, instruments: userInstruments, profilePic: newPhoto }, $push: { picture: newPhoto } })
+    User.updateOne({ _id: req.user.id }, { $set: { email, name, surname, age, biography: about, instruments: userInstruments, profilePic: newPhoto }, $push: { picture: newPhoto } })
       .then(() => {
         res.redirect('/profile');
       })
@@ -62,7 +62,7 @@ router.post('/profile/edit', uploadCloud.single('photo'), (req, res) => {
       });
   }
 
-  User.update({ _id: req.user.id }, { $set: { email, name, surname, age, biography: about, instruments: userInstruments } })
+  User.updateOne({ _id: req.user.id }, { $set: { email, name, surname, age, biography: about, instruments: userInstruments } })
     .then(() => {
       res.redirect('/profile');
     })

@@ -10,13 +10,13 @@ const bcryptSalt = 10;
 
 
 router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
-  const userID = req.user._id
-  User.find(userID)
+  const user = req.user._id
+  User.find(user)
     .then(() => {
-      Band.find({ members: userID })
+      Band.find({ members: user })
         .then(bands => {
           console.log(bands)
-          res.render('band/band-page', { bands });
+          res.render('band/band-page', { bands, user });
         })
         .catch(err => console.log(err))
 
@@ -25,10 +25,13 @@ router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
 
 })
 router.get('/create-band', ensureLoggedIn('login'), (req, res, next) => {
-  res.render('band/create-band')
+  User.find(req.user._id)
+    .then(() => res.render('band/create-band'))
+    .catch(err => console.log(err))
+
 })
 
-router.post('/create-band', (req, res, next) => {
+router.post('/create-band', ensureLoggedIn('login'), (req, res, next) => {
   const { bandname, genre, biography } = req.body;
   const leader = req.user;
   const members = []
@@ -51,12 +54,18 @@ router.post('/create-band', (req, res, next) => {
 
 router.get('/band-profile/:bandID', (req, res, next) => {
   const bandID = req.params.bandID;
-
+  let user;
+  if (req.user) user = req.user._id;
   Band.findById(bandID)
     .then((band) => {
-      User.findById(band.leader)
-        .then((user) => {
-          res.render('band/band-profile', { band, user })
+      User.find()
+        .then((users) => {
+          let x = true;
+          console.log(band.members.includes(user))
+          if (!band.members.includes(user)) { x = false }
+          console.log(x);
+          
+          res.render('band/band-profile', { band, user, users, x })
         })
         .catch(err => console.log(err))
     })

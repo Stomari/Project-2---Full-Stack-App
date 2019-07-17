@@ -16,13 +16,20 @@
       <button class="dropbtn">Infos</button>
       <div class="dropdown-content">
         <a href="/">Home</a>
+        {{!-- Input "if logged appears logout logic later" --}}
+
+
+
+        {{#if user}}
+        <a href="/search">Search</a>
         <a href="/profile">My Profile</a>
         <a href="/mybands">My Bands</a>
-        {{!-- Input "if logged appears logout logic later" --}}
+        <a href="/invites">Invitations</a>
+        <a href="/logout">Logout</a>
+        {{else}}
         <a href="/login">Login</a>
         <a href="/signup">Sign up</a>
-        <a href="/logout">Logout</a>
-        <a href="/search">Search</a>
+        {{/if}}
       </div>
     </div>
   </nav>
