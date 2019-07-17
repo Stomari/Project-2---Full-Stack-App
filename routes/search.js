@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
+const Band = require('../models/band');
 const Invite = require('../models/invite');
 const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 
@@ -16,10 +17,11 @@ router.get('/search/users', ensureLoggedIn('login'), (req, res) => {
   res.render('profile/musician-search', { user });
 });
 
-router.post('/search/users', (req, res) => {
+router.post('/search/users', ensureLoggedIn('login'), (req, res) => {
+  let user = req.user._id;
   User.find({ instruments: req.body.instruments, _id: { $ne: req.user.id } })
     .then(data => {
-      res.render('profile/musician-search', { data })
+      res.render('profile/musician-search', { data, user })
     })
     .catch(err => console.log(err));
 })
@@ -30,10 +32,11 @@ router.get('/search/bands', ensureLoggedIn('login'), (req, res) => {
 });
 
 
-router.post('/search/bands', (req, res) => {
+router.post('/search/bands', ensureLoggedIn('login'), (req, res) => {
+  let user = req.user._id
   Band.find({ genre: req.body.genres })
     .then(data => {
-      res.render('band/band-search', { data })
+      res.render('band/band-search', { data, user })
     })
     .catch(err => console.log(err));
 })

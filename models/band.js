@@ -12,7 +12,6 @@ const bandSchema = new Schema({
   },
   chatband: { type: [String], default: [] },
   members: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
-  votes: { type: [Number], votes: [Number] },
   votesValues: { type: Number, default: 0 },
 }, {
     timestamps: true,

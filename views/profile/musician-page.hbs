@@ -1,8 +1,8 @@
 <div id="user-card">
   <div>
-  {{#if data.profilePic}}
-  <img id="profile-pic" src="{{data.profilePic.path}}" alt="">
-  {{/if}}
+    {{#if data.profilePic}}
+    <img id="profile-pic" src="{{data.profilePic.path}}" alt="">
+    {{/if}}
   </div>
   <div class="info">
     <h3 class="name">{{data.name}} {{data.surname}}</h3>
@@ -29,24 +29,53 @@
     </div>
   </div>
 </div>
+{{#if message}}
+<p>{{message}}</p>
+{{/if}}
+{{#if user}}
+<div class="votes">
+  <form action="/vote/{{data._id}}" method="post">
+    <input type="hidden" name="userID" value="{{user._id}}">
+    <input type="submit" value="1" name="vote">
+  </form>
+  <form action="/vote/{{data._id}}" method="post">
+    <input type="hidden" name="userID" value="{{user._id}}">
+    <input type="submit" value="2" name="vote">
+  </form>
+  <form action="/vote/{{data._id}}" method="post">
+    <input type="hidden" name="userID" value="{{user._id}}">
+    <input type="submit" value="3" name="vote">
+  </form>
+  <form action="/vote/{{data._id}}" method="post">
+    <input type="hidden" name="userID" value="{{user._id}}">
+    <input type="submit" value="4" name="vote">
+  </form>
+  <form action="/vote/{{data._id}}" method="post">
+    <input type="hidden" name="userID" value="{{user._id}}">
+    <input type="submit" value="5" name="vote">
+  </form>
+</div>
+{{/if}}
 
+<p>total votes: {{data.votes.length}}</p>
+<p>Rating: {{data.rating}}</p>
 <div class="invite">
   <form action="/invitation" method="POST">
-  <p>Do you want this person to join your band?</p>
+    <p>Do you want this person to join your band?</p>
 
-  <br>
+    <br>
 
-  <p>Select your band:</p>
-  <select name="bands">
-    {{#each userData.bands}}
-    <option name="bandID" value="{{this.id}}">{{this.bandname}}</option>
-    {{/each}}
-  </select>
-  <input type="hidden" name="userID" value="{{data.id}}">
+    <p>Select your band:</p>
+    <select name="bands">
+      {{#each userData.bands}}
+      <option name="bandID" value="{{this.id}}">{{this.bandname}}</option>
+      {{/each}}
+    </select>
+    <input type="hidden" name="userID" value="{{data.id}}">
 
-  <br>
+    <br>
 
-  <button type="submit">INVITE</button>
-  
+    <button type="submit">INVITE</button>
+
   </form>
 </div>

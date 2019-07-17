@@ -73,14 +73,17 @@ router.post('/profile/edit', uploadCloud.single('photo'), (req, res) => {
 
 // USER PAGE
 router.get('/profile/:id', (req, res) => {
+  let user = false;
   User.findById(req.params.id)
     .populate('bands picture profilePic')
     .then((data) => {
-      const user = req.user;
+      if (req.user) user = req.user;
       User.findById(user.id)
         .populate('bands picture')
         .then(userData => {
-          res.render('profile/musician-page', { data, userData })
+          data.rating = data.votesValues.reduce((total, num) => total + num) / data.votes.length
+          console.log(data.rating);
+          res.render('profile/musician-page', { data, userData, user })
         })
         .catch(err => console.log(err));
     })
@@ -88,7 +91,7 @@ router.get('/profile/:id', (req, res) => {
 })
 
 // INVITES PAGE
-router.get('/invites',ensureLogin.ensureLoggedIn('login'), (req, res) => {
+router.get('/invites', ensureLogin.ensureLoggedIn('login'), (req, res) => {
   User.findById(req.user._id)
     .populate('bands picture profilePic').populate({ path: 'invites', populate: [{ path: 'owner' }, { path: 'bandInvite' }] })
     .then(data => {
@@ -98,7 +101,7 @@ router.get('/invites',ensureLogin.ensureLoggedIn('login'), (req, res) => {
     .catch(err => console.log(err));
 })
 
-router.post('/invites', (req, res) => {
+router.post('/invites', ensureLogin.ensureLoggedIn('login'), (req, res) => {
   if (req.body.accept) {
     Band.findOneAndUpdate({ _id: req.body.bandID }, { $push: { members: req.user.id } })
       .then(() => {
@@ -113,6 +116,22 @@ router.post('/invites', (req, res) => {
       .catch(err => console.log(err));
   }
 })
+// Vote
 
+router.post('/vote/:votedUser', ensureLogin.ensureLoggedIn('login'), (req, res) => {
+  const { vote, userID } = req.body;
+  const votedUser = req.params.votedUser
+  User.findById(votedUser)
+    .then(user => {
+      if (!user.votes.includes(userID.toString())) {
+        user.updateOne({ $push: { votes: userID, votesValues: vote } })
+          .then(() => res.redirect('/profile/' + votedUser))
+          .catch(err => console.log(err))
+      } else {
+        res.redirect('/profile/' + votedUser, { message: 'You have already voted on this user!' })
+      }
+    })
+    .catch(err => console.log(err))
+})
 
 module.exports = router;
