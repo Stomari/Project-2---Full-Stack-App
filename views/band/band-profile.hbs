@@ -17,3 +17,9 @@
 <p>{{this}}</p>
 {{/each}}
 {{/if}}
+
+{{#if user.joined}}
+<form action="/request-to-join/{{band._id}}" method="POST">
+  <input type="submit"  name="request" value="Request to join!">
+</form>
+{{/if}}

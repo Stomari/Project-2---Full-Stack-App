@@ -128,7 +128,7 @@ router.post('/vote/:votedUser', ensureLogin.ensureLoggedIn('login'), (req, res) 
           .then(() => res.redirect('/profile/' + votedUser))
           .catch(err => console.log(err))
       } else {
-        res.redirect('/profile/' + votedUser, { message: 'You have already voted on this user!' })
+        res.redirect('/profile/' + votedUser)
       }
     })
     .catch(err => console.log(err))
