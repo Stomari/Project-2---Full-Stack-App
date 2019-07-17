@@ -1,8 +1,10 @@
 const express = require('express');
 const User = require('../models/user');
 const Band = require('../models/band');
-const router = express.Router();
+const Invite = require('../models/invite');
 const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
+
+const router = express.Router();
 
 router.get('/search', ensureLoggedIn('login'), (req, res) => {
   User.find({ _id: { $ne: req.user.id } })
@@ -17,18 +19,22 @@ router.get('/search', ensureLoggedIn('login'), (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.post('/search', (req, res) => {
-  const { userID } = req.body;
+router.post('/invite', (req, res) => {
+  const { userID, bands } = req.body;
   const { _id } = req.user;
-  console.log(_id);
 
-  Band.findOneAndUpdate({ leader: _id }, { $push: { members: userID } })
-    .then(band => {
-      User.findByIdAndUpdate(userID, { $push: { mybands: band } })
-        .then(() => res.redirect('/search'))
-        .catch(err => console.log(err))
+  const newInvite = new Invite({
+    owner: _id,
+    to: userID,
+    bandInvite: bands,
+  })
+  newInvite.save();
 
-    })
-    .catch(err => console.log(err))
+  User.updateOne({ _id: userID }, { $push: { invites: newInvite }})
+    .then((data) => {
+      console.log(data)
+      res.redirect('/search')})
+    .catch(err => console.log(err));
 })
+
 module.exports = router;
