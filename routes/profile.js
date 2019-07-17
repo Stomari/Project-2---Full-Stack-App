@@ -81,7 +81,6 @@ router.get('/profile/:id', (req, res) => {
       User.findById(user.id)
         .populate('bands picture')
         .then(userData => {
-          console.log(userData)
           res.render('profile/musician-page', { data, userData })
         })
         .catch(err => console.log(err));
