@@ -10,7 +10,7 @@ const userSchema = new Schema({
     enum: ['GUEST', 'EDITOR', 'ADMIN'],
     default: 'GUEST',
   },
-  invites: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
+  invites: [{ type: Schema.Types.ObjectId, ref: 'Invite' }],
   picture: [{ type: Schema.Types.ObjectId, ref: 'Picture', default: [] }],
   profilePic: { type: Schema.Types.ObjectId, ref: 'Picture' },
   name: { type: String, required: true },
