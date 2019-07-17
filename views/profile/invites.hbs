@@ -1,0 +1,13 @@
+<h1>Your invites:</h1>
+<div class="invite">
+  {{#each data.invites}}
+  <form action="/invites" method="POST">
+    <h3>{{this.owner.username}}</h3>
+    <p>{{this.message}}</p>
+    <p>My band: <a href="/band-profile/{{this.bandInvite.id}}">{{this.bandInvite.bandname}}</a></p>
+    <input type="hidden" name="inviteID" value="{{this.id}}">
+    <input type="hidden" name="bandID" value="{{this.bandInvite.id}}">
+    <p><button type="submit" name="accept" value="true">Accept</button> or <button type="submit" name="decline" value="true">Decline</button></p>
+  </form>
+  {{/each}}
+</div>
