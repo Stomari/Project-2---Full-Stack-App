@@ -3,11 +3,12 @@
   <option value="">{{this.bandname}}</option>
   {{/each}}
 </select>
+
 <ul>
   {{#each data}}
   <li>
 
-    <p>{{username}} <form action="/" method="post">
+    <p>{{username}} <form action="/search" method="post">
         <input type="hidden" name="userID" value="{{_id}}">
         <button type="submit">Invite</button>
       </form>

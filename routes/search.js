@@ -10,7 +10,7 @@ router.get('/search', ensureLoggedIn('login'), (req, res) => {
       User.findById(req.user.id)
         .populate('bands')
         .then(user => {
-          res.render('band-search', { data, user });
+          res.render('band/band-search', { data, user });
         })
         .catch(err => console.log(err));
     })
@@ -25,7 +25,7 @@ router.post('/search', (req, res) => {
   Band.findOneAndUpdate({ leader: _id }, { $push: { members: userID } })
     .then(band => {
       User.findByIdAndUpdate(userID, { $push: { mybands: band } })
-        .then(() => res.redirect('/band-search'))
+        .then(() => res.redirect('/search'))
         .catch(err => console.log(err))
 
     })

@@ -1,16 +1,19 @@
 <h1>{{band.bandname}}</h1>
-<h2>{{user.name}}</h2>
-{{#each band}}
-<h3>{{genre}}</h3>
+{{#each users}}
+<h2>{{this.name}}</h2>
+{{/each}}
+{{#each band.genre}}
+<h3>{{this}}</h3>
 {{/each}}
 
-
+{{#if x}}
 <form action="" method="post">
   <label for="chatband" name="">{{user.name}}</label>
-  <textarea name="chatband" id="" cols="100" rows="5" placeholder="chatband">Enter your text for your band here =)</textarea>
+  <textarea name="chatband" id="" cols="100" rows="5"
+    placeholder="chatband">Enter your text for your band here =)</textarea>
   <button type="submit">Submit</button>
 </form>
-
+{{/if}}
 {{#each band.chatband}}
 <p>{{this}}</p>
 {{/each}}
