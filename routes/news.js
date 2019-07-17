@@ -8,9 +8,9 @@ const uploadCloud = require('../public/config/cloudinary');
 
 const router = express.Router();
 
-function checkRoles(role) {
-  return function (req, res, next) {
-    if (req.isAuthenticated() && req.user.role === role) {
+const checkRoles = (role) => {
+  return (req, res, next) => {
+    if (req.isAuthenticated() && req.user.role === role || req.isAuthenticated() && req.user.role === 'ADMIN') {
       return next();
     } else {
       res.redirect('/news')
@@ -24,7 +24,7 @@ router.get('/news', ensureLogin.ensureLoggedIn(), (req, res) => {
     .populate('writer image')
     .then((data) => {
       const user = req.user;
-      if (req.user.role === 'EDITOR') {
+      if (req.user.role === 'EDITOR' || req.user.role === 'ADMIN') {
         req.user.editor = true;
       }
       res.render('news/news', { data, user })
