@@ -27,12 +27,3 @@
     </div>
   </div>
 </div>
-
-<div class="invite">
-  {{#each data.invites}}
-  <h3>{{this.owner.username}}</h3>
-  <p>{{this.message}}</p>
-  <p>My band: <a href="/band-profile/{{this.bandInvite.id}}">{{this.bandInvite.bandname}}</a></p>
-  <p><a href="">Accept</a> or <a href="">Decline</a></p>
-  {{/each}}
-</div>

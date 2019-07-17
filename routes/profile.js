@@ -3,7 +3,8 @@ const ensureLogin = require('connect-ensure-login');
 const multer = require('multer');
 const User = require('../models/user');
 const Picture = require('../models/picture');
-const Invite = require('../models/invite')
+const Invite = require('../models/invite');
+const Band = require('../models/band');
 const uploadCloud = require('../public/config/cloudinary');
 
 const router = express.Router();
@@ -11,9 +12,8 @@ const router = express.Router();
 // CURRENT LOGGED USER PAGE
 router.get('/profile', ensureLogin.ensureLoggedIn(), (req, res) => {
   User.findById(req.user._id)
-    .populate('bands picture profilePic').populate({path: 'invites', populate: [{path: 'owner'} , {path: 'bandInvite'}]})
+    .populate('bands picture profilePic').populate({ path: 'invites', populate: [{ path: 'owner' }, { path: 'bandInvite' }] })
     .then(data => {
-      console.log(data.invites[0]);
       const user = req.user;
       res.render('profile/user-page', { data, user })
     })
@@ -85,6 +85,33 @@ router.get('/profile/:id', (req, res) => {
         .catch(err => console.log(err));
     })
     .catch(err => console.log(err));
+})
+
+// INVITES PAGE
+router.get('/invites', (req, res) => {
+  User.findById(req.user._id)
+    .populate('bands picture profilePic').populate({ path: 'invites', populate: [{ path: 'owner' }, { path: 'bandInvite' }] })
+    .then(data => {
+      const user = req.user;
+      res.render('profile/invites', { data, user });
+    })
+    .catch(err => console.log(err));
+})
+
+router.post('/invites', (req, res) => {
+  if (req.body.accept) {
+    Band.findOneAndUpdate({ _id: req.body.bandID }, { $push: { members: req.user.id } })
+      .then(() => {
+        Invite.findByIdAndDelete(req.body.inviteID)
+          .then(() => res.redirect('/invites'))
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err))
+  } else {
+    Invite.findByIdAndDelete(req.body.inviteID)
+      .then(() => res.redirect('/invites'))
+      .catch(err => console.log(err));
+  }
 })
 
 
