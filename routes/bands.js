@@ -7,6 +7,7 @@ const User = require('../models/user');
 const Band = require('../models/band');
 const router = express.Router();
 const bcryptSalt = 10;
+const Request = require('../models/request')
 
 // User band pages
 router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
@@ -117,14 +118,19 @@ router.post('/delete-member/:userID', ensureLoggedIn(), (req, res, next) => {
 router.get('/band-profile/:bandID', (req, res, next) => {
   const bandID = req.params.bandID;
   let user;
-  if (req.user) user = req.user._id;
+  if (req.user) {
+    user = req.user._id
+    user.joined = true;
+  }
   Band.findById(bandID)
     .then((band) => {
       User.find({ _id: { $in: band.members } })
         .then(users => {
           let x = true;
-          // Check if user is a member so he can post in the band chat
+          // Check if user is a member so he can post in the band chat and see the chat
           if (!band.members.includes(user)) { x = false }
+          // Check if user isnt already in the band
+          if (band.members.includes(user)) { user.joined = false }
           res.render('band/band-profile', { band, user, users, x })
         })
         .catch(err => console.log(err))
@@ -141,5 +147,20 @@ router.post('/band-profile/:bandID', ensureLoggedIn('login'), (req, res, next) =
       res.redirect('/band-profile/' + bandID)
     })
     .catch()
+})
+router.post('/request-to-join/:bandID', ensureLoggedIn('login'), (req, res, next) => {
+  const bandID = req.params.bandID;
+  const user = req.user._id;
+
+  const newRequest = new Request({
+    owner: user,
+    to: bandID,
+  })
+
+  Band.findByIdAndUpdate(bandID, { $push: { request: newRequest } })
+    .then(() => {
+      res.redirect('/band-profile/' + bandID)
+    })
+    .catch(err => console.log(err))
 })
 module.exports = router;
