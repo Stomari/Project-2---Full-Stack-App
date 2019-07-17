@@ -9,7 +9,7 @@ const uploadCloud = require('../public/config/cloudinary');
 const router = express.Router();
 
 function checkRoles(role) {
-  return function(req, res, next) {
+  return function (req, res, next) {
     if (req.isAuthenticated() && req.user.role === role) {
       return next();
     } else {
@@ -34,18 +34,55 @@ router.get('/news', ensureLogin.ensureLoggedIn(), (req, res) => {
 
 // USER ARTICLES
 router.get('/news/your-articles', checkRoles('EDITOR'), ensureLogin.ensureLoggedIn(), (req, res) => {
-  console.log(req.user.id)
-  News.find({ writer: req.user.id })
+  const userID = req.user.id;
+  const user = req.user;
+  News.find({ writer: userID })
     .then((data) => {
       res.render('news/user-articles', { data, user })
     })
     .catch(err => console.log(err));
 });
 
+// EDIT ARTICLE
+router.get('/news/:newsID/edit', checkRoles('EDITOR'), ensureLogin.ensureLoggedIn(), (req, res) => {
+  News.findById(req.params.newsID)
+    .then((data) => {
+      res.render('news/news-edit', data);
+    })
+    .catch(err => console.log(err));
+})
+
+router.post('/news/:newsID/edit', checkRoles('EDITOR'), uploadCloud.single('photo'), ensureLogin.ensureLoggedIn(), (req, res) => {
+  const { title, abstract, text } = req.body;
+
+  let imgPath = '';
+  let newPhoto = '';
+  if (req.file !== undefined) {
+    imgPath = req.file.url;
+    newPhoto = new Picture({ path: imgPath });
+    newPhoto.save();
+    News.updateOne({ _id: req.params.newsID }, { $set: { title, abstract, text, image: newPhoto } })
+      .then(() => {
+        res.redirect('/news/your-articles');
+      })
+      .catch((error) => {
+        console.log('Error: ', error);
+      });
+  }
+
+  News.updateOne({ _id: req.params.newsID }, { $set: { title, abstract, text } })
+    .then(() => {
+      res.redirect('/news/your-articles');
+    })
+    .catch((error) => {
+      console.log('Error: ', error);
+    });
+})
+
 // CREATE NEWS
-router.get('/news/create', ensureLogin.ensureLoggedIn(), (req, res) => {
+router.get('/news/create', checkRoles('EDITOR'), ensureLogin.ensureLoggedIn(), (req, res) => {
   const user = req.user;
-  res.render('news/news-create',  user)
+  res.render('news/news-create', { user })
 });
 
 router.post('/news/create', uploadCloud.single('photo'), (req, res) => {
@@ -66,7 +103,7 @@ router.post('/news/create', uploadCloud.single('photo'), (req, res) => {
     });
     newArticle.save();
   }
-  
+
   newArticle = new News({
     title,
     abstract,
@@ -74,7 +111,7 @@ router.post('/news/create', uploadCloud.single('photo'), (req, res) => {
     writer: writerID,
   });
   newArticle.save();
-  
+
   res.redirect('/news')
 });
 
@@ -83,12 +120,21 @@ router.get('/news/:newsID', ensureLogin.ensureLoggedIn(), (req, res) => {
   const { newsID } = req.params;
   const user = req.user;
   News.findById(newsID)
-    .populate('writer')
+    .populate('writer image')
     .then((data) => {
       console.log(data)
       res.render('news/news-page', { data, user });
     })
     .catch(err => console.log(err));
 });
+
+// DELETE ARTICLE
+router.get('/news/:newsID/delete', (req, res) => {
+  News.findByIdAndDelete(req.params.newsID)
+    .then(() => {
+      res.redirect('/news/your-articles');
+    })
+    .catch(err => console.log(err));
+})
 
 module.exports = router;

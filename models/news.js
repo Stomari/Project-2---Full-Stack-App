@@ -6,7 +6,7 @@ const newsSchema = new Schema({
   abstract: { type: String, required: true },  
   text: { type: String, required: true },
   writer: { type: Schema.Types.ObjectId, ref: 'User' },
-  image: { type: Schema.Types.ObjectId, ref: 'Picture' },
+  image: { type: Schema.Types.ObjectId, ref: 'Picture', default: null },
 }, {
     timestamps: true,
   });
