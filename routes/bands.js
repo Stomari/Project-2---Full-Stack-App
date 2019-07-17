@@ -8,14 +8,13 @@ const Band = require('../models/band');
 const router = express.Router();
 const bcryptSalt = 10;
 
-
+// User band pages
 router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
   const user = req.user._id
   User.find(user)
     .then(() => {
       Band.find({ members: user })
         .then(bands => {
-          console.log(bands)
           res.render('band/band-page', { bands, user });
         })
         .catch(err => console.log(err))
@@ -24,19 +23,18 @@ router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
     .catch(err => console.log(err))
 
 })
+// Create a band
 router.get('/create-band', ensureLoggedIn('login'), (req, res, next) => {
   User.find(req.user._id)
     .then(() => res.render('band/create-band'))
     .catch(err => console.log(err))
 
 })
-
 router.post('/create-band', ensureLoggedIn('login'), (req, res, next) => {
   const { bandname, genre, biography } = req.body;
   const leader = req.user;
   const members = []
   members.push(leader);
-  console.log(members)
   const newBand = new Band({ bandname, leader, genre, biography, members });
   const userID = req.user._id;
   newBand.save()
@@ -52,22 +50,24 @@ router.post('/create-band', ensureLoggedIn('login'), (req, res, next) => {
 }
 )
 
+// See band profile
 router.get('/band-profile/:bandID', (req, res, next) => {
   const bandID = req.params.bandID;
   let user;
   if (req.user) user = req.user._id;
   Band.findById(bandID)
     .then((band) => {
-      User.find()
-        .then((users) => {
+      User.find({ _id: { $in: band.members } })
+        .then(users => {
           let x = true;
-          console.log(band.members.includes(user))
+          // console.log(users)
+          // console.log(band);
+          // Check if user is a member so he can post in the band chat
           if (!band.members.includes(user)) { x = false }
-          console.log(x);
-          
           res.render('band/band-profile', { band, user, users, x })
         })
         .catch(err => console.log(err))
+
     })
     .catch(err => console.log(err))
 })

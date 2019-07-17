@@ -22,7 +22,7 @@ router.get('/profile', ensureLogin.ensureLoggedIn(), (req, res) => {
 
 // EDIT USER
 router.get('/profile/edit', ensureLogin.ensureLoggedIn(), (req, res) => {
-  console.log(req.user)
+  let user = req.user;
   User.findById(req.user._id)
     .then((data) => {
       let datIns = [];
@@ -32,7 +32,7 @@ router.get('/profile/edit', ensureLogin.ensureLoggedIn(), (req, res) => {
           datIns.push('checked')
         } else datIns.push('')
       });
-      res.render('profile/profile-edit', { data, datIns })
+      res.render('profile/profile-edit', { data, datIns, user })
     })
     .catch(err => console.log(err));
 });
@@ -46,7 +46,6 @@ router.post('/profile/edit', uploadCloud.single('photo'), (req, res) => {
       userInstruments.push(instruments[i]);
     }
   });
-
   let imgPath = '';
   let newPhoto = '';
   if (req.file !== undefined) {
@@ -81,7 +80,6 @@ router.get('/profile/:id', (req, res) => {
       User.findById(user.id)
         .populate('bands picture')
         .then(userData => {
-          console.log(userData)
           res.render('profile/musician-page', { data, userData })
         })
         .catch(err => console.log(err));
