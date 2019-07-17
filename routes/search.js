@@ -1,6 +1,5 @@
 const express = require('express');
 const User = require('../models/user');
-const Band = require('../models/band');
 const Invite = require('../models/invite');
 const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 
@@ -30,6 +29,7 @@ router.get('/search/bands', ensureLoggedIn('login'), (req, res) => {
   res.render('band/band-search', { user });
 });
 
+
 router.post('/search/bands', (req, res) => {
   Band.find({ genre: req.body.genres })
     .then(data => {
@@ -39,7 +39,7 @@ router.post('/search/bands', (req, res) => {
 })
 
 // USER INVITATION
-router.post('/invitation', (req, res) => {
+router.post('/invitation', ensureLoggedIn('login'), (req, res) => {
   const { userID, bands } = req.body;
   const { _id } = req.user;
 
