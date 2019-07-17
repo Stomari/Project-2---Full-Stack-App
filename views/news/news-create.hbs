@@ -1,5 +1,5 @@
 <div>
-  <form action="/news/create" method="POST">
+  <form action="/news/create" method="POST" enctype="multipart/form-data">
     <label for="title">Title:</label>
     <input type="text" name="title" id="title" placeholder="Title">
 
@@ -15,7 +15,7 @@
 
     <br>
 
-    <input type="hidden" name="writerID" value="{{id}}">
+    <input type="hidden" name="writerID" value="{{user.id}}">
     <label>Article Picture</label>
     <input type="file" name="photo">
     <br>

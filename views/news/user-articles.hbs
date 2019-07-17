@@ -1,6 +1,9 @@
 <div>
   {{#each data}}
+  <div>
   <a href="/news/{{this.id}}">{{this.title}}</a>
-  <a href="/news/{{this.id}}/edit"></a><button>EDIT</button>
+  <a href="/news/{{this.id}}/edit"><button>EDIT</button></a>
+  <a href="/news/{{this.id}}/delete"><button>DELETE</button></a>  
+  </div>
   {{/each}}
 </div>
