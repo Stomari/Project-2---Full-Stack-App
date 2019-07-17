@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user')
+
 router.get('/', (req, res) => {
   if (req.user !== undefined) {
     User.find(req.user._id)

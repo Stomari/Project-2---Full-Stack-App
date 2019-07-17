@@ -30,10 +30,11 @@ router.post('/invite', (req, res) => {
   })
   newInvite.save();
 
-  User.updateOne({ _id: userID }, { $push: { invites: newInvite }})
+  User.updateOne({ _id: userID }, { $push: { invites: newInvite } })
     .then((data) => {
       console.log(data)
-      res.redirect('/search')})
+      res.redirect('/search')
+    })
     .catch(err => console.log(err));
 })
 
