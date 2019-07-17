@@ -3,6 +3,7 @@ const ensureLogin = require('connect-ensure-login');
 const multer = require('multer');
 const User = require('../models/user');
 const Picture = require('../models/picture');
+const Invite = require('../models/invite')
 const uploadCloud = require('../public/config/cloudinary');
 
 const router = express.Router();
@@ -10,28 +11,18 @@ const router = express.Router();
 // CURRENT LOGGED USER PAGE
 router.get('/profile', ensureLogin.ensureLoggedIn(), (req, res) => {
   User.findById(req.user._id)
-    .populate('bands picture profilePic')
+    .populate('bands picture profilePic').populate({path: 'invites', populate: [{path: 'owner'} , {path: 'bandInvite'}]})
     .then(data => {
+      console.log(data.invites[0]);
       const user = req.user;
       res.render('profile/user-page', { data, user })
     })
     .catch(err => console.log(err));
 });
 
-// USER PAGE
-router.get('/profile/:id', (req, res) => {
-  User.findById(req.params.id)
-    .populate('bands picture profilePic')
-    .then((data) => {
-      console.log(data)
-      const user = '';
-      res.render('profile/user-page', { data, user })
-    })
-    .catch(err => console.log(err));
-})
-
 // EDIT USER
 router.get('/profile/edit', ensureLogin.ensureLoggedIn(), (req, res) => {
+  console.log(req.user)
   User.findById(req.user._id)
     .then((data) => {
       let datIns = [];
@@ -80,5 +71,23 @@ router.post('/profile/edit', uploadCloud.single('photo'), (req, res) => {
     });
 
 })
+
+// USER PAGE
+router.get('/profile/:id', (req, res) => {
+  User.findById(req.params.id)
+    .populate('bands picture profilePic')
+    .then((data) => {
+      const user = req.user;
+      User.findById(user.id)
+        .populate('bands picture')
+        .then(userData => {
+          console.log(userData)
+          res.render('profile/musician-page', { data, userData })
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+})
+
 
 module.exports = router;

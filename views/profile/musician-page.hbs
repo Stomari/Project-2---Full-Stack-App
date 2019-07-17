@@ -14,9 +14,11 @@
       {{/each}}
     </ul>
     <p>{{data.biography}}</p>
-    {{#if user}}
-    <a href="/profile/edit"><button>EDIT</button></a>
-    {{/if}}
+    <br>
+    <br>
+    {{#each invites}}
+    {{invites}}
+    {{/each}}
     <br>
     <br>
     <h2>{{data.username}} bands:</h2>
@@ -29,10 +31,22 @@
 </div>
 
 <div class="invite">
-  {{#each data.invites}}
-  <h3>{{this.owner.username}}</h3>
-  <p>{{this.message}}</p>
-  <p>My band: <a href="/band-profile/{{this.bandInvite.id}}">{{this.bandInvite.bandname}}</a></p>
-  <p><a href="">Accept</a> or <a href="">Decline</a></p>
-  {{/each}}
+  <form action="/invite" method="POST">
+  <p>Do you want this person to join your band?</p>
+
+  <br>
+
+  <p>Select your band:</p>
+  <select name="bands">
+    {{#each userData.bands}}
+    <option name="bandID" value="{{this.id}}">{{this.bandname}}</option>
+    {{/each}}
+  </select>
+  <input type="hidden" name="userID" value="{{data.id}}">
+
+  <br>
+
+  <button type="submit">INVITE</button>
+  
+  </form>
 </div>

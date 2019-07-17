@@ -1,17 +1,9 @@
-<select name="bands" id="">
-  {{#each user.bands}}
-  <option value="">{{this.bandname}}</option>
-  {{/each}}
-</select>
-<ul>
-  {{#each data}}
-  <li>
-
-    <p>{{username}} <form action="/" method="post">
-        <input type="hidden" name="userID" value="{{_id}}">
-        <button type="submit">Invite</button>
-      </form>
-    </p>
-  </li>
-  {{/each}}
-</ul>
+  <ul>
+    {{#each data}}
+    <li>
+      <p>
+        <a href="/profile/{{id}}">{{username}}</a>
+      </p>
+    </li>
+    {{/each}}
+  </ul>
