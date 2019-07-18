@@ -6,10 +6,12 @@ router.get('/', (req, res) => {
   let user;
   if (req.user) user = req.user._id;
   User.find()
+    .populate('Picture')
     .then(users => {
       // Make users receive their vote value
       users.map(rankedUser => {
-        rankedUser.vote = rankedUser.votesValues.reduce((total, num) => total + num, 0) / rankedUser.votes.length
+        if (rankedUser.votes.length) rankedUser.vote = rankedUser.votesValues.reduce((total, num) => total + num, 0) / rankedUser.votes.length
+        else rankedUser.vote = rankedUser.votesValues.reduce((total, num) => total + num, 0) / 1
       })
       // Sort them Desc
       users.sort((a, b) => b.vote - a.vote)
