@@ -11,6 +11,7 @@ body {
   height: auto;
   width: 100vw;
   overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
 }
 
 a {
@@ -256,6 +257,61 @@ a {
   background-color: #B24FE8;
   color: white;
 }
+
+.invite-card {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 80vw;
+  height: auto;
+  padding: 5%;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 5%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.invite-card .btn {
+  background-color: #471F5C;
+  color: white;
+}
+
+.band-create {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  width: auto;
+  height: auto;
+  padding: 5%;
+  border: 5px solid black;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.del-mem .btn {
+  background-color: #B24FE8;
+  color: white;
+  border-radius: 20px;
+}
+
+.band-create .btn {
+  background-color: #B24FE8;
+  color: white;
+  font-size: 1.2rem;
+  width: 50%;
+  border-radius: 20px;
+}
+
+.band-create #btn {
+  display: flex;
+  justify-content: center;
+}
+
 .search-margin {
   margin-top: 5%;
 }
@@ -340,10 +396,25 @@ a {
   #user-card .bio {
     width: 50vw;
   }
+
+  .invite-card {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: black;
+    width: 50vw;
+    height: auto;
+    padding: 5%;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 5%;
+    font-family: 'Poppins', sans-serif;
+  }
 }
 
   .news-heading {
     font-size: 4em;
   }
-}
+
 
