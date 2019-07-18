@@ -1,12 +1,12 @@
 const express = require('express');
 const ensureLogin = require('connect-ensure-login');
 const multer = require('multer');
-const User = require('../models/user');
+const uploadCloud = require('../public/config/cloudinary');
 const Picture = require('../models/picture');
+const User = require('../models/user');
 const Invite = require('../models/invite');
 const Band = require('../models/band');
 const Request = require('../models/request')
-const uploadCloud = require('../public/config/cloudinary');
 
 const router = express.Router();
 

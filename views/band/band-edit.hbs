@@ -1,6 +1,6 @@
-<form action="/band-edit/{{band._id}}" method="POST">
+<form action="/band-edit/{{band._id}}" method="POST" enctype="multipart/form-data">
   <label for="bandlogo">Change your logo: </label>
-  <input type="file" name="bandlogo" id="band-logo">
+  <input type="file" name="bandlogo" id="bandlogo">
   <label for="bandname">Band name: </label>
   <input type="text" name="bandname" id="band-name" value="{{band.bandname}}">
   <p>Genres: </p>

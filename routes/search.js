@@ -20,6 +20,7 @@ router.get('/search/users', ensureLoggedIn('login'), (req, res) => {
 router.post('/search/users', ensureLoggedIn('login'), (req, res) => {
   let user = req.user._id;
   User.find({ instruments: req.body.instruments, _id: { $ne: req.user.id } })
+    .populate('profilePic')
     .then(data => {
       res.render('profile/musician-search', { data, user })
     })
@@ -35,6 +36,7 @@ router.get('/search/bands', ensureLoggedIn('login'), (req, res) => {
 router.post('/search/bands', ensureLoggedIn('login'), (req, res) => {
   let user = req.user._id
   Band.find({ genre: req.body.genres })
+    .populate('picture')
     .then(data => {
       res.render('band/band-search', { data, user })
     })

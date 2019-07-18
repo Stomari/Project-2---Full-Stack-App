@@ -8,6 +8,9 @@ const Band = require('../models/band');
 const router = express.Router();
 const bcryptSalt = 10;
 const Request = require('../models/request')
+const multer = require('multer');
+const uploadCloud = require('../public/config/cloudinary');
+const Picture = require('../models/picture');
 
 // User band pages
 router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
@@ -43,7 +46,7 @@ router.get('/create-band', ensureLoggedIn('login'), (req, res, next) => {
     .catch(err => console.log(err))
 
 })
-router.post('/create-band', ensureLoggedIn('login'), (req, res, next) => {
+router.post('/create-band', ensureLoggedIn('login'), uploadCloud.single('bandlogo'), (req, res, next) => {
   const { bandname, biography } = req.body;
   const genres = ['rock', 'country', 'pop', 'jazz', 'hip-hop', 'folk', 'electronic', 'blues', 'instrumental', 'gospel'];
   const userGenres = []
@@ -55,17 +58,36 @@ router.post('/create-band', ensureLoggedIn('login'), (req, res, next) => {
   const leader = req.user;
   const members = []
   members.push(leader);
-  const newBand = new Band({ bandname, leader, genre: userGenres, biography, members });
-  const userID = req.user._id;
-  newBand.save()
-    .then(() => {
-      User.findByIdAndUpdate(userID, { $push: { bands: newBand } })
-        .then()
-        .catch(err => console.log(err))
-
-      res.redirect('/band-profile/' + newBand._id);
-    })
-    .catch(err => console.log(err));
+  let imgPath = '';
+  let newPhoto = '';
+  if (req.file !== undefined) {
+    imgPath = req.file.url;
+    newPhoto = new Picture({ path: imgPath });
+    newPhoto.save();
+    const newBand = new Band({ bandname, leader, genre: userGenres, biography, members, picture: newPhoto });
+    const userID = req.user._id;
+    newBand.save()
+      .then(() => {
+        User.findByIdAndUpdate(userID, { $push: { bands: newBand } })
+          .then(() => {
+            res.redirect('/band-profile/' + newBand._id);
+          })
+          .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err));
+  } else {
+    const newBand = new Band({ bandname, leader, genre: userGenres, biography, members });
+    const userID = req.user._id;
+    newBand.save()
+      .then(() => {
+        User.findByIdAndUpdate(userID, { $push: { bands: newBand } })
+          .then(() => {
+            res.redirect('/band-profile/' + newBand._id);
+          })
+          .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err));
+  }
 })
 
 // Edit a band
@@ -90,7 +112,7 @@ router.get('/band-edit/:bandID', ensureLoggedIn('login'), (req, res, next) => {
     .catch(err => console.log(err))
 })
 
-router.post('/band-edit/:bandID', ensureLoggedIn(), (req, res, next) => {
+router.post('/band-edit/:bandID', ensureLoggedIn(), uploadCloud.single('bandlogo'), (req, res, next) => {
   const bandID = req.params.bandID;
   const { bandname } = req.body
   const genres = ['rock', 'country', 'pop', 'jazz', 'hip-hop', 'folk', 'electronic', 'blues', 'instrumental', 'gospel'];
@@ -98,9 +120,21 @@ router.post('/band-edit/:bandID', ensureLoggedIn(), (req, res, next) => {
   const newGenres = []
   genres.forEach((el, i) => req.body[el] ? newGenres.push(genres[i]) : false)
   if (req.user) user = req.user._id;
-  Band.findByIdAndUpdate(bandID, { $set: { bandname, genre: newGenres } })
-    .then(() => res.redirect('/mybands'))
-    .catch(err => console.log(err))
+
+  let imgPath = '';
+  let newPhoto = '';
+  if (req.file !== undefined) {
+    imgPath = req.file.url;
+    newPhoto = new Picture({ path: imgPath });
+    newPhoto.save();
+    Band.findByIdAndUpdate(bandID, { $set: { bandname, genre: newGenres, picture: newPhoto } })
+      .then(() => res.redirect('/mybands'))
+      .catch(err => console.log(err))
+  } else {
+    Band.findByIdAndUpdate(bandID, { $set: { bandname, genre: newGenres } })
+      .then(() => res.redirect('/mybands'))
+      .catch(err => console.log(err))
+  }
 })
 
 // delete members from band
@@ -123,6 +157,7 @@ router.get('/band-profile/:bandID', (req, res, next) => {
     user.joined = true;
   }
   Band.findById(bandID)
+    .populate('picture')
     .then((band) => {
       User.find({ _id: { $in: band.members } })
         .then(users => {
