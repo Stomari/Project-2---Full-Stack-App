@@ -1,6 +1,5 @@
 <div class="index-background d-flex flex-column">
   <div class="d-flex justify-content-center align-items-center cards-margin">
-    {{!-- <img src="../imgs/musiKick.png" class="logo-img img-fluid" alt=""> --}}
     <div class="index-header">
       <h2>Welcome to <span class="myNavColor">MusiKick</span></h2>
       <p>Find people to play together!</p>
@@ -12,9 +11,9 @@
 
   <div class="user-ranking d-flex flex-column cards-margin">
     <h2 class="d-flex align-self-center ranked-view-margin">View our ranked members profile</h2>
-    <div class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around  flex-wrap">
       {{#each users}}
-      <div class="card" style="width: 20rem;">
+      <div class="card card-radius" style="width: 20rem;">
         <img src="{{profilePic.path}}" class="card-img-top" alt="profile-image">
         <div class="card-body">
           <h5 class="card-title"><strong>{{name}}</strong> - rating: {{vote}}</h5>

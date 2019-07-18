@@ -1,8 +1,8 @@
-<div>
+<div class="d-flex align-items-center flex-column search-margin">
   {{#if data.image}}
   <img src="{{data.image.path}}">
   {{/if}}
-  <h1>{{data.title}}</h1>
-  <h4>Article by: {{data.writer.name}} {{data.writer.surname}}</h4>
-  <p>{{data.text}}</p>
+  <h1 class="news-heading">{{data.title}}</h1>
+  <h4>An article by: {{data.writer.name}} {{data.writer.surname}}</h4>
+  <p class="search-margin">{{data.text}}</p>
 </div>
