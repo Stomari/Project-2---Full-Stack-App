@@ -17,8 +17,11 @@
       <div class="card" style="width: 20rem;">
         <img src="{{profilePic.path}}" class="card-img-top" alt="profile-image">
         <div class="card-body">
-          <h5 class="card-title">{{name}} - rating: {{vote}}</h5>
-          <p class="card-text">{{biography}}</p>
+          <h5 class="card-title"><strong>{{name}}</strong> - rating: {{vote}}</h5>
+          <p><strong>Instruments:</strong></p>
+          {{#each instruments}}
+          <p class="card-text">{{this}}</p>
+          {{/each}}
           <a href="/profile/{{_id}}" class="btn btn-primary">Profile</a>
         </div>
       </div>

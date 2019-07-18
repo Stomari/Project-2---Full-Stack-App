@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
   let user;
   if (req.user) user = req.user._id;
   User.find()
-    .populate('Picture')
+    .populate('profilePic')
     .then(users => {
       // Make users receive their vote value
       users.map(rankedUser => {
