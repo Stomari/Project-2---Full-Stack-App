@@ -1,6 +1,6 @@
 <div class="box">
   <div id="user-card">
-    <div class="mr-5">
+    <div>
       {{#if data.profilePic}}
       <figure id="profile-pic">
         <img src="{{data.profilePic.path}}" alt="">
@@ -10,6 +10,7 @@
     <div class="info">
       <h3><strong>Name:</strong> {{data.name}} {{data.surname}}</h3>
       <p><strong>Age:</strong> {{data.age}}</p>
+      <p><strong>User Rank:</strong>{{#if data.rating}} {{data.rating}} / 5 of {{data.votes.length}} votes {{/if}} {{#unless data.rating}}This user has no votes yet{{/unless}}</p>
       <p><strong>Username:</strong> {{data.username}}</p>
       <h3><strong>Instruments:</strong></h3>
       <ul>
@@ -17,7 +18,7 @@
         <li>{{this}}</li>
         {{/each}}
       </ul>
-      <p><strong>About:</strong> {{data.biography}}</p>
+      <p class="bio"><strong>About:</strong> {{data.biography}}</p>
       <br>
       <br>
       <h2><strong>{{data.username}}'s bands:</strong></h2>
@@ -26,14 +27,14 @@
       {{/unless}}
       <div>
         {{#each data.bands}}
-        {{this.bandname}}
+        <p><a href="/band-profile/{{this.id}}">{{this.bandname}}</a></p>
         {{/each}}
       </div>
-    </div>
-    <div id="btn">
+      <div id="btn">
       {{#if user}}
-      <a href="/profile/edit"><button class="btn">EDIT</button></a>
+      <a href="/profile/edit"><button class="btn">EDIT YOUR PROFILE</button></a>
       {{/if}}
+    </div>
     </div>
   </div>
 </div>

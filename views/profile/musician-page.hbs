@@ -1,84 +1,93 @@
-<div id="user-card">
-  <div>
-    {{#if data.profilePic}}
-    <img id="profile-pic" src="{{data.profilePic.path}}" alt="">
-    {{/if}}
-  </div>
-  <div class="info">
-    <h3 class="name">{{data.name}} {{data.surname}}</h3>
-    <p>{{data.age}}</p>
-    <p>{{data.username}}</p>
-    <ul>
-      {{#each data.instruments}}
-      <li>{{this}}</li>
-      {{/each}}
-    </ul>
-    <p>{{data.biography}}</p>
-    <br>
-    <br>
-    {{#each invites}}
-    {{invites}}
-    {{/each}}
-    <br>
-    <br>
-    <h2>{{data.username}} bands:</h2>
+<div class="box">
+  <div id="user-card">
     <div>
-      {{#each data.bands}}
-      {{this.bandname}}
-      {{/each}}
+      {{#if data.profilePic}}
+      <figure id="profile-pic">
+        <img src="{{data.profilePic.path}}" alt="">
+      </figure>
+      {{/if}}
+    </div>
+    <div class="info">
+      <h3><strong>Name:</strong> {{data.name}} {{data.surname}}</h3>
+      <p><strong>Age:</strong> {{data.age}}</p>
+      <p><strong>User Rank:</strong>{{#if data.rating}} {{data.rating}} / 5 of {{data.votes.length}} votes {{/if}}
+        {{#unless data.rating}}This user has no votes yet{{/unless}}</p>
+      <p><strong>Username:</strong> {{data.username}}</p>
+      <h3><strong>Instruments:</strong></h3>
+      <ul>
+        {{#each data.instruments}}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+      <p class="bio"><strong>About:</strong> {{data.biography}}</p>
+      <br>
+      <br>
+      <h2><strong>{{data.username}}'s bands:</strong></h2>
+      {{#unless data.bands}}
+      <p>This user has no bands yet!</p>
+      {{/unless}}
+      <div>
+        {{#each data.bands}}
+        <p><a href="/band-profile/{{this.id}}">{{this.bandname}}</a></p>
+        {{/each}}
+      </div>
     </div>
   </div>
-</div>
-{{#if message}}
-<p>{{message}}</p>
-{{/if}}
-{{#if user}}
-<div class="votes">
-  <form action="/vote/{{data._id}}" method="post">
-    <input type="hidden" name="userID" value="{{user._id}}">
-    <input type="submit" value="1" name="vote">
-  </form>
-  <form action="/vote/{{data._id}}" method="post">
-    <input type="hidden" name="userID" value="{{user._id}}">
-    <input type="submit" value="2" name="vote">
-  </form>
-  <form action="/vote/{{data._id}}" method="post">
-    <input type="hidden" name="userID" value="{{user._id}}">
-    <input type="submit" value="3" name="vote">
-  </form>
-  <form action="/vote/{{data._id}}" method="post">
-    <input type="hidden" name="userID" value="{{user._id}}">
-    <input type="submit" value="4" name="vote">
-  </form>
-  <form action="/vote/{{data._id}}" method="post">
-    <input type="hidden" name="userID" value="{{user._id}}">
-    <input type="submit" value="5" name="vote">
-  </form>
-</div>
-{{/if}}
 
-<p>total votes: {{data.votes.length}}</p>
-<p>Rating: {{data.rating}}</p>
+  {{#if message}}
+  <p>{{message}}</p>
+  {{/if}}
 
-{{#if userData.bands}}
-<div class="invite">
-  <form action="/invitation" method="POST">
-    <p>Do you want this person to join your band?</p>
+  <div class="user-menu">
+    {{#if user}}
+    <h1>Rank this user!</h1>
+    <div class="votes">
+      <form action="/vote/{{data._id}}" method="post">
+        <input type="hidden" name="userID" value="{{user._id}}">
+        <input class="vote-num" type="submit" value="1" name="vote">
+      </form>
+      <form action="/vote/{{data._id}}" method="post">
+        <input type="hidden" name="userID" value="{{user._id}}">
+        <input class="vote-num" type="submit" value="2" name="vote">
+      </form>
+      <form action="/vote/{{data._id}}" method="post">
+        <input type="hidden" name="userID" value="{{user._id}}">
+        <input class="vote-num" type="submit" value="3" name="vote">
+      </form>
+      <form action="/vote/{{data._id}}" method="post">
+        <input type="hidden" name="userID" value="{{user._id}}">
+        <input class="vote-num" type="submit" value="4" name="vote">
+      </form>
+      <form action="/vote/{{data._id}}" method="post">
+        <input type="hidden" name="userID" value="{{user._id}}">
+        <input class="vote-num" type="submit" value="5" name="vote">
+      </form>
+    </div>
+    {{/if}}
 
     <br>
-
-    <p>Select your band:</p>
-    <select name="bands">
-      {{#each userData.bands}}
-      <option name="bandID" value="{{this.id}}">{{this.bandname}}</option>
-      {{/each}}
-    </select>
-    <input type="hidden" name="userID" value="{{data.id}}">
-
     <br>
+    {{#if userData.bands}}
+    <div class="invite">
+      <form class="d-flex align-items-center justify-content-center flex-column" action="/invitation" method="POST">
+        <h1>Do you want this person to join your band?</h1>
 
-    <button type="submit">INVITE</button>
+        <br>
 
-  </form>
+        <p>Select your band:</p>
+        <select name="bands">
+          {{#each userData.bands}}
+          <option name="bandID" value="{{this.id}}">{{this.bandname}}</option>
+          {{/each}}
+        </select>
+        <input type="hidden" name="userID" value="{{data.id}}">
+
+        <br>
+
+        <button type="submit">INVITE</button>
+
+      </form>
+    </div>
+    {{/if}}
+  </div>
 </div>
-{{/if}}
