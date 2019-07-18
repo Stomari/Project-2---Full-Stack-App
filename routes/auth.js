@@ -15,11 +15,11 @@ router.post('/signup', (req, res) => {
   const { username, firstName, surname, age, password, email, role } = req.body;
 
   if (username === '' || password === '' || email === '') {
-    res.render('auth/signup', { message: 'Indicate username, password and email are required' });
+    res.render('auth/signup', { message: 'Username, password and email are required' });
     return;
   }
   if (typeof parseInt(age) !== 'number') {
-    res.render('auth/signup', { message: 'Indicate age with a number' });
+    res.render('auth/signup', { message: 'Age must be a number' });
     return;
   }
 

@@ -1,4 +1,4 @@
-<div class="login">
+<div class="account">
   <div class="authentication">
     <form action="/login" method="POST">
       <div class="form-group">
@@ -11,10 +11,16 @@
       </div>
       <div class="form-group form-check">
       </div>
-      <button type="submit" class="btn btn-primary">Login</button>
+      <div id="btn">
+      <button type="submit" class="btn">Login</button>
+      </div>
       {{#if message}}
       <div class="error-message">{{ message }}</div>
       {{/if}}
+      <br>
+      <br>
+      <br>
+      <p>Don't have an account yet? <a href="/signup"><strong>SIGN UP</strong></a></p>
     </form>
   </div>
 </div>
