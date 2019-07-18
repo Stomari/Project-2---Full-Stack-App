@@ -56,7 +56,6 @@ router.post('/invitation', ensureLoggedIn('login'), (req, res) => {
 
   User.updateOne({ _id: userID }, { $push: { invites: newInvite } })
     .then((data) => {
-      console.log(data)
       res.redirect('/search')
     })
     .catch(err => console.log(err));

@@ -1,11 +1,7 @@
-<div>
+<div class="d-flex align-items-center justify-content-center search-margin">
   <form action="/search/users" method="POST">
-
-    <h2>Search:</h2>
-
     <h3>Choose the instrument:</h3>
-
-    <select name="instruments" id="instruments">
+    <select class="form-control" name="instruments" id="instruments">
       <option value="electric-guitar">Electric Guitar</option>
       <option value="acoustic-guitar">Acoustic Guitar</option>
       <option value="bass">Bass</option>
@@ -21,20 +17,23 @@
       <option value="trumpet">Trumpet</option>
       <option value="harp">Harp</option>
     </select>
-
-    <button type="submit">GO!</button>
+    <button type="submit" class="btn btn-block search-btn">Search</button>
   </form>
 </div>
 
-<div class="search-result">
-  {{#each data}}
-  <a href="/profile/{{id}}">
-    <div class="musician-card">
-      {{#if this.profilePic}}
-      <img src="{{this.profilePic.path}}" alt="">
-      {{/if}}
-      <p>{{this.username}}</p>
+
+<div class="user-ranking d-flex flex-column cards-margin">
+  <div class="d-flex justify-content-around  flex-wrap">
+    {{#each data}}
+    <div class="card search-header-margin card-radius" style="width: 20rem;">
+      <img src="{{this.profilePic.path}}" class="card-img-top" alt="profile-image">
+      <div class="card-body">
+        <h5 class="card-title">Name: {{this.name}} - Rating: {{this.vote}}</h5>
+        <p class="card-text">Biography: </p>
+        <p class="card-text">{{biography}}</p>
+        <a href="/profile/{{id}}" class="btn btn-primary">Profile</a>
+      </div>
     </div>
-  </a>
-  {{/each}}
+    {{/each}}
+  </div>
 </div>

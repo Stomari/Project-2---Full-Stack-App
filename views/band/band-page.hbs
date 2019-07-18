@@ -1,13 +1,27 @@
-<h1>My bands</h1>
-{{#each bands}}
-<p>{{bandname}}- {{genre}}</p>
-<textarea name="" id="" cols="30" rows="10">{{biography}}</textarea>
-{{#if isLeader}}
-<a href="/band-edit/{{_id}}">Edit</a>
-<form action="/delete-band/{{_id}}" method="post">
-  <button type="submit">Delete</button>
-</form>
-{{/if}}
-<a href="/band-profile/{{_id}}">More</a>
-{{/each}}
-<a href="/create-band">Create a new band!</a>
+<div class="d-flex align-items-center flex-column search-margin">
+  <h1>My bands</h1>
+  <a href="/create-band" class="btn search-btn">Create a new band!</a>
+</div>
+<div class="user-ranking d-flex flex-column cards-margin">
+  <div class="d-flex justify-content-around flex-wrap">
+    {{#each bands}}
+    <div class="card search-header-margin card-radius" style="width: 20rem;">
+      <img src="{{picture.path}}" class="card-img-top" alt="band-image">
+      <div class="card-body">
+        <h5 class="card-title">Name: {{bandname}}</h5>
+        <h6 class="card-title">Members: {{#each members}}{{this.name}} {{/each}}</h6>
+        <h6 class="card-title">Genres: {{genre}}</h6>
+        <p class="card-text">Biography: </p>
+        <p class="card-text">{{biography}}</p>
+        <a href="/band-profile/{{_id}}" class="btn btn-primary">Profile</a>
+        {{#if isLeader}}
+        <a href="/band-edit/{{_id}}" class="btn btn-primary">Edit</a>
+        <form action="/delete-band/{{_id}}" method="post" class="delete-form">
+          <button type="submit" class="btn-delete">Delete</button>
+        </form>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
