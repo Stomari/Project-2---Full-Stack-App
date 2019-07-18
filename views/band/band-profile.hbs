@@ -1,3 +1,6 @@
+{{#if band.picture}}
+<img src="{{band.picture.path}}">
+{{/if}}
 <h1>{{band.bandname}}</h1>
 {{#each users}}
 <h2>{{this.name}}</h2>

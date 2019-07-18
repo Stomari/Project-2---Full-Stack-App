@@ -6,7 +6,7 @@ const bandSchema = new Schema({
   bandname: { type: String, required: true },
   biography: { type: String, default: 'We are a band !' },
   leader: { type: Schema.Types.ObjectId, ref: 'User' },
-  picture: { type: Schema.Types.ObjectId, ref: 'Picture' },
+  picture: { type: Schema.Types.ObjectId, ref: 'Picture', default: null },
   genre: {
     type: Array,
   },
