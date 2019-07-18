@@ -156,6 +156,7 @@ router.post('/request-to-join/:bandID', ensureLoggedIn('login'), (req, res, next
     owner: user,
     to: bandID,
   })
+  newRequest.save();
 
   Band.findByIdAndUpdate(bandID, { $push: { request: newRequest } })
     .then(() => {

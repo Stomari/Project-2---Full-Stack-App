@@ -1,12 +1,23 @@
-<h1>Your invites:</h1>
-<div class="invite">
+<h1>Your pendencies:</h1>
+<div class="pendencies">
   {{#each data.invites}}
-  <form action="/invites" method="POST">
+  <form action="/pendencies" method="POST">
     <h3>{{this.owner.username}}</h3>
     <p>{{this.message}}</p>
     <p>My band: <a href="/band-profile/{{this.bandInvite.id}}">{{this.bandInvite.bandname}}</a></p>
     <input type="hidden" name="inviteID" value="{{this.id}}">
     <input type="hidden" name="bandID" value="{{this.bandInvite.id}}">
+    <p><button type="submit" name="accept" value="true">Accept</button> or <button type="submit" name="decline" value="true">Decline</button></p>
+  </form>
+  {{/each}}
+  {{#each band.[0].request}}
+  <form action="/pendencies/request" method="POST">
+    <h3>{{this.owner.username}}</h3>
+    <p>{{this.message}}</p>
+    <p>Your band: <a href="/band-profile/{{this.to.id}}">{{this.to.bandname}}</a></p>
+    <input type="hidden" name="requestID" value="{{this.id}}">
+    <input type="hidden" name="bandID" value="{{this.to.id}}">
+    <input type="hidden" name="userID" value="{{this.owner.id}}">
     <p><button type="submit" name="accept" value="true">Accept</button> or <button type="submit" name="decline" value="true">Decline</button></p>
   </form>
   {{/each}}

@@ -59,6 +59,8 @@
 
 <p>total votes: {{data.votes.length}}</p>
 <p>Rating: {{data.rating}}</p>
+
+{{#if userData.bands}}
 <div class="invite">
   <form action="/invitation" method="POST">
     <p>Do you want this person to join your band?</p>
@@ -79,3 +81,4 @@
 
   </form>
 </div>
+{{/if}}
