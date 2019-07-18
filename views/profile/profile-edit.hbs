@@ -1,73 +1,113 @@
-<h2>Edit</h2>
+<div class="box">
+  <div class="edit">
+    <form action="/profile/edit" method="POST" enctype="multipart/form-data">
+      <h1>Edit your Profile</h1>
+      <div class="form-row">
+        <div class="form-group col-md-5">
+          <label for="name">First Name</label>
+          <input type="text" class="form-control" id="firstName" name="name" value="{{data.name}}">
+        </div>
+        <div class="form-group col-md-5">
+          <label for="surname">Last Name</label>
+          <input type="text" class="form-control" id="surname" name="surname" value="{{data.surname}}">
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="age">Age</label>
+          <input type="number" class="form-control" id="age" name="age" value="{{data.age}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" value="{{data.email}}">
+      </div>
 
-<form action="/profile/edit" method="POST" id="form-container" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="about">About</label>
+        <textarea class="form-control" name="about" id="about" rows="3">{{data.biography}}</textarea>
+      </div>
 
-  <label for="name">First Name</label>
-  <input id="firstName" type="text" name="name" value="{{data.name}}">
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name="photo" id="inputGroupFile04"
+            aria-describedby="inputGroupFileAddon04">
+          <label class="custom-file-label" for="inputGroupFile04">Profile Picture</label>
+        </div>
+      </div>
 
-  <br><br>
+      <br>
 
-  <label for="surname">Surname</label>
-  <input id="surname" type="text" name="surname" value="{{data.surname}}">
+      <h1>Choose your instruments</h1>
+      <br>
+      <div class="ml-5 mb-3">
+        <div class="checkboxes form-row mb-2">
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="electric-guitar" name="electric-guitar"
+              {{ datIns.[0] }}>
+            <label class="custom-control-label" for="electric-guitar">Electric Guitar</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="acoustic-guitar" name="acoustic-guitar"
+              {{ datIns.[1] }}>
+            <label class="custom-control-label" for="acoustic-guitar">Acoustic Guitar</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="bass" name="bass" {{ datIns.[2] }}>
+            <label class="custom-control-label" for="bass">Bass</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="keyboard" name="keyboard" {{ datIns.[3] }}>
+            <label class="custom-control-label" for="keyboard">Keyboard</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="piano" name="piano" {{ datIns.[4] }}>
+            <label class="custom-control-label" for="piano">Piano</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="drums" name="drums" {{ datIns.[5] }}>
+            <label class="custom-control-label" for="drums">Drums</label>
+          </div>
+        </div>
+        <div class="checkboxes form-row mb-3">
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="vocal" name="vocal" {{ datIns.[6] }}>
+            <label class="custom-control-label" for="vocal">Vocalist</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="violin" name="violin" {{ datIns.[7] }}>
+            <label class="custom-control-label" for="violin">Violin</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="saxophone" name="saxophone" {{ datIns.[8] }}>
+            <label class="custom-control-label" for="saxophone">Saxophone</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="flute" name="flute" {{ datIns.[9] }}>
+            <label class="custom-control-label" for="flute">Flute</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="cello" name="cello" {{ datIns.[10] }}>
+            <label class="custom-control-label" for="cello">Cello</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="clarinet" name="clarinet" {{ datIns.[11] }}>
+            <label class="custom-control-label" for="clarinet">Clarinet</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="trumpet" name="trumpet" {{ datIns.[12] }}>
+            <label class="custom-control-label" for="trumpet">Trumpet</label>
+          </div>
+          <div class="custom-control custom-checkbox col-sm-2">
+            <input type="checkbox" class="custom-control-input" id="harp" name="harp" {{ datIns.[13] }}>
+            <label class="custom-control-label" for="harp">Harp</label>
+          </div>
+        </div>
+      </div>
 
-  <br><br>
-
-  <label for="age">Age</label>
-  <input id="age" type="number" name="age" value="{{data.age}}">
-
-  <br><br>
-
-  <label for="email">Email</label>
-  <input id="email" type="text" name="email" value="{{data.email}}">
-
-  <br><br>
-
-  <div id="checkboxes">
-  
-    <input type="checkbox" id="electric-guitar" name="electric-guitar" {{ datIns.[0] }}>
-    <label for="electric-guitar">Electric Guitar</label>
-    <input type="checkbox" id="acoustic-guitar" name="acoustic-guitar" {{ datIns.[1] }}>
-    <label for="acoustic-guitar">Acoustic Guitar</label>
-    <input type="checkbox" id="bass" name="bass" {{ datIns.[2] }}>
-    <label for="bass">Bass</label>
-    <input type="checkbox" id="keyboard" name="keyboard" {{ datIns.[3] }}>
-    <label for="keyboard">Keyboard</label>
-    <input type="checkbox" id="piano" name="piano" {{ datIns.[4] }}>
-    <label for="piano">Piano</label>
-    <input type="checkbox" id="drums" name="drums" {{ datIns.[5] }}>
-    <label for="drums">Drums</label>
-    <input type="checkbox" id="vocal" name="vocal" {{ datIns.[6] }}>
-    <label for="vocal">Vocalist</label>
-    <input type="checkbox" id="violin" name="violin" {{ datIns.[7] }}>
-    <label for="violin">Violin</label>
-    <input type="checkbox" id="saxophone" name="saxophone" {{ datIns.[8] }}>
-    <label for="saxophone">Saxophone</label>
-    <input type="checkbox" id="flute" name="flute" {{ datIns.[9] }}>
-    <label for="flute">Flute</label>
-    <input type="checkbox" id="cello" name="cello" {{ datIns.[10] }}>
-    <label for="cello">Cello</label>
-    <input type="checkbox" id="clarinet" name="clarinet" {{ datIns.[11] }}>
-    <label for="clarinet">Clarinet</label>
-    <input type="checkbox" id="trumpet" name="trumpet" {{ datIns.[12] }}>
-    <label for="trumpet">Trumpet</label>
-    <input type="checkbox" id="harp" name="harp" {{ datIns.[13] }}>
-    <label for="harp">Harp</label>
-
+      <div id="btn">
+        <button type="submit" class="btn">Edit Profile</button>
+      </div>
+    </form>
   </div>
-
-  <br><br>
-
-  <label for="about">About</label>
-  <br>
-  <textarea name="about" id="about" cols="100" rows="10">{{data.biography}}</textarea>
-
-  <br><br>
-
-  <label>Profile Picture</label>
-  <input type="file" name="photo">
-
-  <br><br>
-
-  <button type="submit">Edit Profile</button>
-
-</form>
+</div>
