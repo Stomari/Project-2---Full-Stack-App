@@ -18,7 +18,7 @@ router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
   User.find(user)
     .then(() => {
       Band.find({ members: user })
-      .populate('members')
+        .populate('members')
         .then(bands => {
           bands.forEach(band => {
             band.isLeader = false;
@@ -158,7 +158,7 @@ router.get('/band-profile/:bandID', (req, res, next) => {
     user.joined = true;
   }
   Band.findById(bandID)
-    .populate('picture')
+    .populate('picture members')
     .then((band) => {
       User.find({ _id: { $in: band.members } })
         .then(users => {

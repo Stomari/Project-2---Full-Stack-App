@@ -16,7 +16,6 @@ router.get('/search/users', ensureLoggedIn('login'), (req, res) => {
   const user = req.user;
   res.render('profile/musician-search', { user });
 });
-
 router.post('/search/users', ensureLoggedIn('login'), (req, res) => {
   let user = req.user._id;
   User.find({ instruments: req.body.instruments, _id: { $ne: req.user.id } })

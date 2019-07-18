@@ -2,10 +2,10 @@
   <img src="{{band.picture.path}}" class="card-img-top" alt="band-image">
   <div class="card-body">
     <h5 class="card-title">Name: {{band.bandname}}</h5>
-    <h6 class="card-title">Members: {{#each members}}{{this.name}} {{/each}}</h6>
-    <h6 class="card-title">Genres: {{genre}}</h6>
+    <h6 class="card-title">Members: {{#each band.members}}{{this.name}} {{this.surname}}{{/each}}</h6>
+    <h6 class="card-title">Genres: {{band.genre}}</h6>
     <p class="card-text">Biography: </p>
-    <p class="card-text">{{biography}}</p>
+    <p class="card-text">{{band.biography}}</p>
   </div>
 </div>
 

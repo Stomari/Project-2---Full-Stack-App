@@ -18,21 +18,21 @@
 </div>
 
 <div class="user-ranking d-flex flex-column cards-margin">
-    <div class="d-flex justify-content-around  flex-wrap">
-      {{#each data}}
-      <div class="card search-header-margin card-radius" style="width: 20rem;">
-        <img src="{{this.picture.path}}" class="card-img-top" alt="band-image">
-        <div class="card-body">
-          <h5 class="card-title">Name: {{this.bandname}}</h5>
-          <p class="card-text">Genre: </p>
-          <ul>
-            {{#each this.genre}}
-            <li>{{this}}</li>
-            {{/each}}
-          </ul>
-          <a href="/band-profile/{{this.id}}" class="btn btn-primary">Profile</a>
+
+  <div class="d-flex justify-content-around  flex-wrap">
+    {{#each data}}
+    <div class="card search-header-margin card-radius" style="width: 20rem;">
+      <img src="{{this.picture.path}}" class="card-img-top card-img-size" alt="band-image">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">Name: {{this.bandname}}</h5>
+        <p class="card-text">Biography: </p>
+        <p class="card-text">{{this.biography}}</p>
+
+        <div class="d-flex flex-column align-items-center justify-content-end card-link-size">
+          <a href="/band-profile/{{this.id}}" class="btn btn-primary justify-content-center">Profile</a>
         </div>
       </div>
-      {{/each}}
     </div>
+    {{/each}}
   </div>
+</div>
