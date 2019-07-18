@@ -3,7 +3,6 @@
   src: url('../fonts/magic.ttf');
 }
 
-
 body {
   color: white;
   background-color: #471F5C;
@@ -12,10 +11,13 @@ body {
   padding: 0;
   height: auto;
   width: 100vw;
+  overflow-x: hidden;
 }
+
 a {
   text-decoration: none;
 }
+
 .myNavColor a{
   font-family: 'magic';
   src: url('../fonts/magic.ttf');
@@ -83,21 +85,108 @@ a {
   margin: 5% 0;
 }
 .authentication {
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   color: black;
-  width: 50%;
-  height: 50vh;
+  width: auto;
+  height: auto;
+  padding: 10%;
   border: 5px solid black;
-  border-radius: 5%;
+  border-radius: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5%;
+  font-family: 'Poppins', sans-serif;
 }
 
-.login {
+.authentication .btn {
+  background-color: #B24FE8;
+  color: white;
+  font-size: 1.2rem;
+  width: 150%;
+  border-radius: 20px;
+}
+
+.authentication #btn {
   display: flex;
   justify-content: center;
 }
+
+.authentication a {
+  color: #B24FE8
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-up {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  width: auto;
+  height: auto;
+  padding: 5%;
+  border: 5px solid black;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.sign-up .btn {
+  background-color: #B24FE8;
+  color: white;
+  font-size: 1.2rem;
+  width: 50%;
+  border-radius: 20px;
+}
+
+.sign-up #btn {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-up a {
+  color: #B24FE8
+}
+
+.sign-up .messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  width: auto;
+  height: auto;
+  padding: 5%;
+  border: 5px solid black;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.edit .btn {
+  background-color: #B24FE8;
+  color: white;
+  font-size: 1.2rem;
+  width: 50%;
+  border-radius: 20px;
+}
+
+.edit  #btn {
+  display: flex;
+  justify-content: center;
+}
+
 .search-body {
   height: 80vh;
 }
@@ -114,6 +203,44 @@ a {
 .search-header-margin {
   margin-bottom: 5%;
 }
+
+#user-card {
+  background-color: rgba(255, 255, 255, 0.4);
+  color: black;
+  width: auto;
+  height: auto;
+  padding: 5%;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 5%;
+  font-family: 'Poppins', sans-serif;
+}
+
+#profile-pic {
+  width: 500px;;
+  height: 500px;
+  
+}
+
+#profile-pic img {
+  width: 100%;
+  height: 100%;  
+  border-radius: 50%;
+  border: 5px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#user-card .btn {
+  background-color: #B24FE8;
+  color: white;
+  font-size: 1.2rem;
+  width: 50%;
+  border-radius: 20px;
+}
+
 @media (min-width: 520px){
   .index-header {
     font-family: 'magic';
@@ -127,4 +254,3 @@ a {
     margin-bottom: 2%;
     font-size: 2em;
   }
-}

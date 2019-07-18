@@ -1,29 +1,39 @@
-<div id="user-card">
-  <div>
-  {{#if data.profilePic}}
-  <img id="profile-pic" src="{{data.profilePic.path}}" alt="">
-  {{/if}}
-  </div>
-  <div class="info">
-    <h3 class="name">{{data.name}} {{data.surname}}</h3>
-    <p>{{data.age}}</p>
-    <p>{{data.username}}</p>
-    <ul>
-      {{#each data.instruments}}
-      <li>{{this}}</li>
-      {{/each}}
-    </ul>
-    <p>{{data.biography}}</p>
-    {{#if user}}
-    <a href="/profile/edit"><button>EDIT</button></a>
-    {{/if}}
-    <br>
-    <br>
-    <h2>{{data.username}} bands:</h2>
-    <div>
-      {{#each data.bands}}
-      {{this.bandname}}
-      {{/each}}
+<div class="box">
+  <div id="user-card">
+    <div class="mr-5">
+      {{#if data.profilePic}}
+      <figure id="profile-pic">
+        <img src="{{data.profilePic.path}}" alt="">
+      </figure>
+      {{/if}}
+    </div>
+    <div class="info">
+      <h3><strong>Name:</strong> {{data.name}} {{data.surname}}</h3>
+      <p><strong>Age:</strong> {{data.age}}</p>
+      <p><strong>Username:</strong> {{data.username}}</p>
+      <h3><strong>Instruments:</strong></h3>
+      <ul>
+        {{#each data.instruments}}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+      <p><strong>About:</strong> {{data.biography}}</p>
+      <br>
+      <br>
+      <h2><strong>{{data.username}}'s bands:</strong></h2>
+      {{#unless data.bands}}
+      <p>This user has no bands yet!</p>
+      {{/unless}}
+      <div>
+        {{#each data.bands}}
+        {{this.bandname}}
+        {{/each}}
+      </div>
+    </div>
+    <div id="btn">
+      {{#if user}}
+      <a href="/profile/edit"><button class="btn">EDIT</button></a>
+      {{/if}}
     </div>
   </div>
 </div>
