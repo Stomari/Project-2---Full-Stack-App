@@ -26,6 +26,9 @@
   {{#each data}}
   <a href="/band-profile/{{this.id}}">
     <div class="band-card">
+      {{#if this.picture}}
+      <img src="{{this.picture.path}}" alt="">
+      {{/if}}
       <p>{{this.bandname}}</p>
     </div>
   </a>

@@ -30,6 +30,9 @@
   {{#each data}}
   <a href="/profile/{{id}}">
     <div class="musician-card">
+      {{#if this.profilePic}}
+      <img src="{{this.profilePic.path}}" alt="">
+      {{/if}}
       <p>{{this.username}}</p>
     </div>
   </a>
