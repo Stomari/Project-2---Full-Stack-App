@@ -255,7 +255,7 @@ a {
   border-color: #B24FE8;
   background-color: #B24FE8;
   color: white;
-
+}
 .search-margin {
   margin-top: 5%;
 }
@@ -298,6 +298,12 @@ a {
 }
 .card-size-large {
   width: 100%;
+  height: 100%;
+}
+.card-img-size {
+  height: 100px;
+}
+.card-link-size {
   height: 100%;
 }
 .news-title-link {
