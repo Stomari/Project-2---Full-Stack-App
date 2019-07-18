@@ -1,22 +1,28 @@
-<div class="header">
-  <h1>News:</h1>
+<div class="d-flex align-items-center flex-column search-margin ">
+  <h1 class="news-heading">News:</h1>
   <h4>The latest articles from our editors!</h4>
 </div>
-<div class="all-news">
-  {{#each data}}
-  <div class="news">
-    {{#if this.image}}
-    <img src="{{this.image.path}}">
-    {{/if}}
-    <a href="/news/{{this.id}}"><h2>{{this.title}}</h2></a>
-    <p>By {{this.writer.name}} {{this.writer.surname}}</p>
-    <p>{{this.abstract}}</p>
+<div class="user-ranking d-flex flex-column cards-margin">
+  <div class="d-flex justify-content-around  flex-wrap">
+    {{#each data}}
+    <div class="card search-header-margin card-radius" style="width: 20rem;">
+      <img src="{{this.image.path}}" class="card-img-top" alt="news-image">
+      <div class="card-body">
+        <a href="/news/{{this.id}}" class="news-title-link">
+          <h2 class="card-title">{{this.title}}</h2>
+        </a>
+        <p class="card-text">By {{this.writer.name}} {{this.writer.surname}}</p>
+        <p class="card-text">{{this.abstract}}</p>
+      </div>
+    </div>
     {{/each}}
   </div>
 </div>
 
 {{#if user.editor}}
-<h3>Editor's menu:</h3>
-<a href="/news/create"><button>Create article</button></a>
-<a href="/news/your-articles"><button>Your articles</button></a>
+<div class="d-flex align-items-center flex-column ">
+  <h3>Editor's menu:</h3>
+  <a href="/news/create"><button class="btn search-btn">Create article</button></a>
+  <a href="/news/your-articles"><button class="btn search-margin search-btn">Your articles</button></a>
+</div>
 {{/if}}

@@ -18,6 +18,7 @@ router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
   User.find(user)
     .then(() => {
       Band.find({ members: user })
+      .populate('members')
         .then(bands => {
           bands.forEach(band => {
             band.isLeader = false;

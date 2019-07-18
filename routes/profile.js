@@ -93,7 +93,6 @@ router.get('/profile/:id', (req, res) => {
         .populate('bands picture')
         .then(userData => {
           data.rating = data.votesValues.reduce((total, num) => total + num, 0) / data.votes.length
-          console.log(data.rating);
           res.render('profile/musician-page', { data, userData, user })
         })
         .catch(err => console.log(err));
@@ -109,7 +108,6 @@ router.get('/pendencies', ensureLogin.ensureLoggedIn('login'), (req, res) => {
       Band.find({ leader: req.user._id })
         .populate({ path: 'request', populate: [{ path: 'owner' }, { path: 'to' }] })
         .then((band) => {
-          console.log(band[0].request)
           const user = req.user;
           res.render('profile/invites', { data, user, band });
         })

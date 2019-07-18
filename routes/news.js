@@ -122,7 +122,6 @@ router.get('/news/:newsID', ensureLogin.ensureLoggedIn(), (req, res) => {
   News.findById(newsID)
     .populate('writer image')
     .then((data) => {
-      console.log(data)
       res.render('news/news-page', { data, user });
     })
     .catch(err => console.log(err));
