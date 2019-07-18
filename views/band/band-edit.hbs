@@ -1,4 +1,4 @@
-<form action="/band-edit/{{band._id}}" method="POST" enctype="multipart/form-data">
+{{!-- <form action="/band-edit/{{band._id}}" method="POST" enctype="multipart/form-data">
   <label for="bandlogo">Change your logo: </label>
   <input type="file" name="bandlogo" id="bandlogo">
   <label for="bandname">Band name: </label>
@@ -36,4 +36,93 @@
     <input type="hidden" name="member" value="{{this._id}}">
     <button type="submit">Delete member!</button>
   </form>
+  {{/each}} --}}
+
+<div class="box">
+  <div class="band-create">
+    <form action="/band-edit/{{band._id}}" method="POST" enctype="multipart/form-data">
+      <h1>Edit your band!</h1>
+      <input type="hidden" name="leader">
+      <input type="hidden" name="members">
+      <div class="form-group">
+        <label for="bandname">Band Name</label>
+        <input type="text" class="form-control" id="bandname" name="bandname" value="{{band.bandname}}">
+      </div>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name="bandlogo" id="bandlogo"
+            aria-describedby="inputGroupFileAddon04">
+          <label class="custom-file-label" for="bandlogo">Band Picture</label>
+        </div>
+      </div>
+
+      <br>
+
+      <h1>Edit the genre of your band</h1>
+      <br>
+      <div class="ml-5 mb-3">
+        <div class="checkboxes form-row mb-2">
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="rock" name="rock" {{datIns.[0]}}>
+            <label class="custom-control-label" for="rock">Rock</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="country" name="country" {{datIns.[1]}}>
+            <label class="custom-control-label" for="country">Country</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="pop" name="pop" {{datIns.[2]}}>
+            <label class="custom-control-label" for="pop">Pop</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="jazz" name="jazz" {{datIns.[3]}}>
+            <label class="custom-control-label" for="jazz">Jazz</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="hip-hop" name="hip-hop" {{datIns.[4]}}>
+            <label class="custom-control-label" for="hip-hop">Hip Hop</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="folk" name="folk" {{datIns.[5]}}>
+            <label class="custom-control-label" for="folk">Folk</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="electronics" name="electronics" {{datIns.[6]}}>
+            <label class="custom-control-label" for="electronics">Electronics</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="blues" name="blues" {{datIns.[7]}}>
+            <label class="custom-control-label" for="blues">Blues</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="instrumental" name="instrumental" {{datIns.[8]}}>
+            <label class="custom-control-label" for="instrumental">Instrumental</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="gospel" name="gospel" {{datIns.[9]}}>
+            <label class="custom-control-label" for="gospel">Gospel</label>
+          </div>
+        </div>
+      </div>
+
+      <div id="btn">
+        <button type="submit" class="btn">Create!</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<br>
+<div class="box">
+  <div class="del-mem">
+  <h1>Delete members:</h1>
+  {{#each users}}
+  <form action="/delete-member/{{this._id}}" method="POST">
+    <input type="hidden" name="bandID" value="{{this.bandDelete}}">
+    <label for="member">{{this.name}}</label>
+    <input type="hidden" name="member" value="{{this._id}}">
+    <button class="btn" type="submit">Delete member!</button>
+  </form>
   {{/each}}
+  </div>
+</div>

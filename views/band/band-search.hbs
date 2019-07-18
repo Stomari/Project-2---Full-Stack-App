@@ -24,8 +24,12 @@
         <img src="{{this.picture.path}}" class="card-img-top" alt="band-image">
         <div class="card-body">
           <h5 class="card-title">Name: {{this.bandname}}</h5>
-          <p class="card-text">Biography: </p>
-          <p class="card-text">{{this.biography}}</p>
+          <p class="card-text">Genre: </p>
+          <ul>
+            {{#each this.genre}}
+            <li>{{this}}</li>
+            {{/each}}
+          </ul>
           <a href="/band-profile/{{this.id}}" class="btn btn-primary">Profile</a>
         </div>
       </div>

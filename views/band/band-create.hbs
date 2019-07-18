@@ -1,31 +1,77 @@
-<form action="/create-band" method="post" enctype="multipart/form-data">
-  <input type="hidden" name="leader">
-  <input type="hidden" name="members">
-  <label for="bandlogo">Choose your logo: </label>
-  <input type="file" name="bandlogo" id="bandlogo">
-  <label for="bandname">Band name: </label>
-  <input type="text" name="bandname" id="">
-  <p>Genres: </p>
-  <input type="checkbox" id="rock" name="rock">
-  <label for="rock">Rock</label>
-  <input type="checkbox" id="country" name="country">
-  <label for="country">Country</label>
-  <input type="checkbox" id="pop" name="pop">
-  <label for="pop">Pop</label>
-  <input type="checkbox" id="jazz" name="jazz">
-  <label for="jazz">Jazz</label>
-  <input type="checkbox" id="hip-hop" name="hip-hop">
-  <label for="hip-hop">Hip Hop</label>
-  <input type="checkbox" id="folk" name="folk">
-  <label for="folk">Folk</label>
-  <input type="checkbox" id="electronic" name="electronic">
-  <label for="electronic">Electronic</label>
-  <input type="checkbox" id="blues" name="blues">
-  <label for="blues">Blues</label>
-  <input type="checkbox" id="instrumental" name="instrumental">
-  <label for="instrumental">Instrumental</label>
-  <input type="checkbox" id="gospel" name="gospel">
-  <label for="gospel">Gospel</label>
-  <textarea name="biography" id="band-bio" cols="100" rows="10"> </textarea>
-  <button type="submit">Create my band!</button>
-</form>
+<div class="box">
+  <div class="band-create">
+    <form action="/create-band" method="POST" enctype="multipart/form-data">
+      <h1>Create your band!</h1>
+      <input type="hidden" name="leader">
+      <input type="hidden" name="members">
+      <div class="form-group">
+        <label for="bandname">Band Name</label>
+        <input type="text" class="form-control" id="bandname" name="bandname">
+      </div>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name="bandlogo" id="bandlogo"
+            aria-describedby="inputGroupFileAddon04">
+          <label class="custom-file-label" for="bandlogo">Band Picture</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="biography">About your band</label>
+        <textarea class="form-control" name="biography" id="biography" rows="3"></textarea>
+      </div>
+
+      <br>
+
+      <h1>Choose the genre of your band</h1>
+      <br>
+      <div class="ml-5 mb-3">
+        <div class="checkboxes form-row mb-2">
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="rock" name="rock">
+            <label class="custom-control-label" for="rock">Rock</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="country" name="country">
+            <label class="custom-control-label" for="country">Country</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="pop" name="pop">
+            <label class="custom-control-label" for="pop">Pop</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="jazz" name="jazz">
+            <label class="custom-control-label" for="jazz">Jazz</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="hip-hop" name="hip-hop">
+            <label class="custom-control-label" for="hip-hop">Hip Hop</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="folk" name="folk">
+            <label class="custom-control-label" for="folk">Folk</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="electronics" name="electronics">
+            <label class="custom-control-label" for="electronics">Electronics</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="blues" name="blues">
+            <label class="custom-control-label" for="blues">Blues</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="instrumental" name="instrumental">
+            <label class="custom-control-label" for="instrumental">Instrumental</label>
+          </div>
+          <div class="custom-control custom-checkbox col-md-3">
+            <input type="checkbox" class="custom-control-input" id="gospel" name="gospel">
+            <label class="custom-control-label" for="gospel">Gospel</label>
+          </div>
+        </div>
+      </div>
+
+      <div id="btn">
+        <button type="submit" class="btn">Create!</button>
+      </div>
+    </form>
+  </div>
+</div>
