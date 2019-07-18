@@ -48,7 +48,6 @@ router.post('/invitation', ensureLoggedIn('login'), (req, res) => {
 
   const newInvite = new Invite({
     owner: _id,
-    to: userID,
     bandInvite: bands,
   })
   newInvite.save();
