@@ -6,10 +6,10 @@
 body {
   color: white;
   background-color: #471F5C;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: auto;
   width: 100vw;
   overflow-x: hidden;
 }
@@ -21,9 +21,69 @@ a {
 .myNavColor a{
   font-family: 'magic';
   src: url('../fonts/magic.ttf');
-  color: #B24FE8;
+  color: #CD70FF;
+}
+.myNavColor{
+  font-family: 'magic';
+  src: url('../fonts/magic.ttf');
+  color: #CD70FF;
+  
+}
+.no-padding {
+  padding: 0;
+}
+.user-ranking {
+  height: auto;
+  color: #A94BDB;
+}
+.user-ranking .btn {
+  border-radius: 10px;
+  background-color: #B24FE8;
+  border:none;
+}
+.footer-background-color {
+  background-color: #9542C2;
+  font-size: 16px;
+}
+.footer-img {
+  height: 25px;
+  width: 25px;
+}
+.logo-img{
+  height: 194px;
+  width: 320px;
+}
+.index-background {
+  background-image: url('../imgs/guitar.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100vw;
+  height: 70%;  
 }
 
+.ranked-view-margin {
+  margin-bottom: 2%;
+  font-size: 1em;
+  background-color: rgba(105, 102, 107,0.5);
+  color:white;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.index-header {
+  font-family: 'magic';
+  src: url('../fonts/magic.ttf');
+  color: white;
+  background-color: rgba(105, 102, 107,0.5);
+  background-size: cover;
+  padding: 40px;
+  border-radius: 50px;
+}
+
+.cards-margin {
+  margin: 5% 0;
+}
 .authentication {
   background-color: rgb(255, 255, 255);
   color: black;
@@ -127,6 +187,22 @@ a {
   justify-content: center;
 }
 
+.search-body {
+  height: 80vh;
+}
+.search-background {
+  background-color: white;
+  padding: 100px;
+  border-radius: 50px;
+}
+.search-background a{
+ margin-bottom: 2%;
+ background-color: #9F46CF;
+ border: none;
+}
+.search-header-margin {
+  margin-bottom: 5%;
+}
 
 #user-card {
   background-color: rgba(255, 255, 255, 0.4);
@@ -164,3 +240,17 @@ a {
   width: 50%;
   border-radius: 20px;
 }
+
+@media (min-width: 520px){
+  .index-header {
+    font-family: 'magic';
+    src: url('../fonts/magic.ttf');
+    color: white;
+    font-size: 2em;
+    background-color: rgba(105, 102, 107,0.5);
+    padding: 40px;
+  }
+  .ranked-view-margin {
+    margin-bottom: 2%;
+    font-size: 2em;
+  }
