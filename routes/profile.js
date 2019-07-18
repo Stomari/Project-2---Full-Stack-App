@@ -5,6 +5,7 @@ const User = require('../models/user');
 const Picture = require('../models/picture');
 const Invite = require('../models/invite');
 const Band = require('../models/band');
+const Request = require('../models/request')
 const uploadCloud = require('../public/config/cloudinary');
 
 const router = express.Router();
@@ -101,31 +102,55 @@ router.get('/profile/:id', (req, res) => {
 })
 
 // INVITES PAGE
-router.get('/invites', ensureLogin.ensureLoggedIn('login'), (req, res) => {
+router.get('/pendencies', ensureLogin.ensureLoggedIn('login'), (req, res) => {
   User.findById(req.user._id)
     .populate('bands picture profilePic').populate({ path: 'invites', populate: [{ path: 'owner' }, { path: 'bandInvite' }] })
     .then(data => {
-      const user = req.user;
-      res.render('profile/invites', { data, user });
+      Band.find({ leader: req.user._id })
+        .populate({ path: 'request', populate: [{ path: 'owner' }, { path: 'to' }] })
+        .then((band) => {
+          console.log(band[0].request)
+          const user = req.user;
+          res.render('profile/invites', { data, user, band });
+        })
+        .catch(err => console.log(err));
     })
     .catch(err => console.log(err));
 })
 
-router.post('/invites', ensureLogin.ensureLoggedIn('login'), (req, res) => {
+router.post('/pendencies', ensureLogin.ensureLoggedIn('login'), (req, res) => {
   if (req.body.accept) {
     Band.findOneAndUpdate({ _id: req.body.bandID }, { $push: { members: req.user.id } })
       .then(() => {
         Invite.findByIdAndDelete(req.body.inviteID)
-          .then(() => res.redirect('/invites'))
+          .then(() => res.redirect('/pendencies'))
           .catch(err => console.log(err));
       })
       .catch(err => console.log(err))
   } else {
     Invite.findByIdAndDelete(req.body.inviteID)
-      .then(() => res.redirect('/invites'))
+      .then(() => res.redirect('/pendencies'))
+      .catch(err => console.log(err));
+  }
+});
+
+router.post('/pendencies/request', ensureLogin.ensureLoggedIn('login'), (req, res) => {
+  if (req.body.accept) {
+    Band.findOneAndUpdate({ _id: req.body.bandID }, { $push: { members: req.body.userID } })
+      .then(() => {
+        Request.findByIdAndDelete(req.body.requestID)
+          .then(() => res.redirect('/pendencies'))
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err))
+  } else {
+    Request.findByIdAndDelete(req.body.requestID)
+      .then(() => res.redirect('/pendencies'))
       .catch(err => console.log(err));
   }
 })
+
+
 // Vote
 
 router.post('/vote/:votedUser', ensureLogin.ensureLoggedIn('login'), (req, res) => {
