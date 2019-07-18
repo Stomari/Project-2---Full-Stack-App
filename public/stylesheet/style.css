@@ -13,9 +13,11 @@ body {
   height: 100vh;
   width: 100vw
 }
+
 a {
   text-decoration: none;
 }
+
 .myNavColor a{
   font-family: 'magic';
   src: url('../fonts/magic.ttf');
@@ -23,18 +25,75 @@ a {
 }
 
 .authentication {
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   color: black;
-  width: 50%;
-  height: 50vh;
+  width: 40vw;
+  height: 60vh;
   border: 5px solid black;
-  border-radius: 5%;
+  border-radius: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5%;
+  font-family: 'Poppins', sans-serif;
 }
 
-.login {
+.authentication .btn {
+  background-color: #B24FE8;
+  color: white;
+  font-size: 1.2rem;
+  width: 150%;
+  border-radius: 20px;
+}
+
+.authentication #btn {
   display: flex;
   justify-content: center;
 }
+
+.authentication a {
+  color: #B24FE8
+}
+
+.account {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-up {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  width: 70vw;
+  height: 70vh;
+  border: 5px solid black;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.sign-up .btn {
+  background-color: #B24FE8;
+  color: white;
+  font-size: 1.2rem;
+  width: 50%;
+  border-radius: 20px;
+}
+
+.sign-up #btn {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-up a {
+  color: #B24FE8
+}
+
+.sign-up .messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
