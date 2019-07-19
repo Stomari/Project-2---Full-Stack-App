@@ -362,6 +362,10 @@ a {
 .card-link-size {
   height: 100%;
 }
+.band-img-card {
+  max-height: fit-content;
+  max-width: 1000px;
+}
 .news-title-link {
   color:white;
 }
