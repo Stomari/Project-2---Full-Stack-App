@@ -369,6 +369,9 @@ a {
 .news-title-link {
   color:white;
 }
+.news-heading {
+  font-size: 2em;
+}
 
 @media (min-width: 520px){
   .index-header {
@@ -415,10 +418,11 @@ a {
     margin-top: 5%;
     font-family: 'Poppins', sans-serif;
   }
-}
-
   .news-heading {
     font-size: 4em;
   }
+}
+
+  
 
 
