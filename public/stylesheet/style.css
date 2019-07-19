@@ -377,6 +377,11 @@ a {
   font-size: 2em;
 }
 
+.news-text {
+  width: 80%;
+  white-space: pre-line
+}
+
 @media (min-width: 520px){
   .index-header {
     font-family: 'magic';
