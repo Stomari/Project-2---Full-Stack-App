@@ -154,7 +154,7 @@ router.get('/band-profile/:bandID', (req, res, next) => {
   let user;
   if (req.user) {
     user = req.user._id
-    user.joined = false;
+    user.joined = true;
   }
   Band.findById(bandID)
     .populate('picture members')
@@ -165,8 +165,8 @@ router.get('/band-profile/:bandID', (req, res, next) => {
           // Check if user is a member so he can post in the band chat and see the chat
           band.members.forEach(member => {
             if (user) {
-              if (member._id.toString() !== user.toString()) { 
-                user.joined = true; 
+              if (member._id.toString() === user.toString()) {
+                user.joined = false; 
               }
               if (member._id.toString() === user.toString()) { x = true; }
             }
