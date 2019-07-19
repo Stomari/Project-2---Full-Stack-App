@@ -18,7 +18,7 @@ router.get('/mybands', ensureLoggedIn(), (req, res, next) => {
   User.find(user)
     .then(() => {
       Band.find({ members: user })
-        .populate('members')
+        .populate('members picture')
         .then(bands => {
           bands.forEach(band => {
             band.isLeader = false;
@@ -101,7 +101,6 @@ router.get('/band-edit/:bandID', ensureLoggedIn('login'), (req, res, next) => {
     .then((band) => {
       User.find({ _id: { $in: band.members, $ne: band.leader } })
         .then(users => {
-          let x = true;
           let datIns = []
           users.forEach(user => user.bandDelete = bandID)
           genres.forEach(element => band.genre.includes(element) ? datIns.push('checked') : datIns.push(''))
@@ -155,18 +154,24 @@ router.get('/band-profile/:bandID', (req, res, next) => {
   let user;
   if (req.user) {
     user = req.user._id
-    user.joined = true;
+    user.joined = false;
   }
   Band.findById(bandID)
     .populate('picture members')
     .then((band) => {
       User.find({ _id: { $in: band.members } })
         .then(users => {
-          let x = true;
+          let x = false;
           // Check if user is a member so he can post in the band chat and see the chat
-          if (!band.members.includes(user)) { x = false }
+          band.members.forEach(member => {
+            if (user) {
+              if (member._id.toString() !== user.toString()) { 
+                user.joined = true; 
+              }
+              if (member._id.toString() === user.toString()) { x = true; }
+            }
+          })
           // Check if user isnt already in the band
-          if (band.members.includes(user)) { user.joined = false }
           res.render('band/band-profile', { band, user, users, x })
         })
         .catch(err => console.log(err))

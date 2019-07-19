@@ -1,9 +1,24 @@
-<div>
-  {{#each data}}
-  <div>
-  <a href="/news/{{this.id}}">{{this.title}}</a>
-  <a href="/news/{{this.id}}/edit"><button>EDIT</button></a>
-  <a href="/news/{{this.id}}/delete"><button>DELETE</button></a>  
+<div class="d-flex justify-content-center search-margin">
+  <h2 class="news-heading">My Articles: </h2>
+</div>
+
+
+<div class="user-ranking d-flex flex-column cards-margin">
+  <div class="d-flex justify-content-around  flex-wrap">
+    {{#each data}}
+    <div class="card search-header-margin card-radius" style="width: 20rem;">
+      <img src="{{this.image.path}}" class="card-img-top card-img-size" alt="news-image">
+      <div class="card-body">
+
+        <a href="/news/{{this.id}}" class="news-title-link">
+          <h2 class="card-title">{{this.title}}</h2>
+        </a>
+        <p class="card-text">By {{this.writer.name}} {{this.writer.surname}}</p>
+        <p class="card-text">{{this.abstract}}</p>
+        <a href="/news/{{this.id}}/edit"><button class="btn btn-primary">EDIT</button></a>
+        <a href="/news/{{this.id}}/delete"><button class="btn-delete ">DELETE</button></a>
+      </div>
+    </div>
+    {{/each}}
   </div>
-  {{/each}}
 </div>
