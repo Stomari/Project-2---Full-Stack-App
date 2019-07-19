@@ -26,7 +26,7 @@ router.get('/profile', ensureLogin.ensureLoggedIn(), (req, res) => {
     .populate('bands picture profilePic').populate({ path: 'invites', populate: [{ path: 'owner' }, { path: 'bandInvite' }] })
     .then(data => {
       const user = req.user;
-      data.rating = data.votesValues.reduce((total, num) => total + num, 0) / data.votes.length
+      data.rating = (data.votesValues.reduce((total, num) => total + num, 0) / data.votes.length).toFixed(1)
       res.render('profile/user-page', { data, user })
     })
     .catch(err => console.log(err));
@@ -93,7 +93,7 @@ router.get('/profile/:id', (req, res) => {
       User.findById(user.id)
         .populate('bands picture')
         .then(userData => {
-          data.rating = data.votesValues.reduce((total, num) => total + num, 0) / data.votes.length
+          data.rating = (data.votesValues.reduce((total, num) => total + num, 0) / data.votes.length).toFixed(1)
           res.render('profile/musician-page', { data, userData, user })
         })
         .catch(err => console.log(err));
