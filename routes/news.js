@@ -36,6 +36,7 @@ router.get('/news', ensureLogin.ensureLoggedIn(), (req, res) => {
 router.get('/news/your-articles', checkRoles('EDITOR'), ensureLogin.ensureLoggedIn(), (req, res) => {
   const userID = req.user.id;
   const user = req.user;
+  console.log(userID)
   News.find({ writer: userID })
     .then((data) => {
       res.render('news/user-articles', { data, user })
@@ -102,17 +103,19 @@ router.post('/news/create', uploadCloud.single('photo'), (req, res) => {
       image: newPhoto,
     });
     newArticle.save();
+    res.redirect('/news')
+
+  } else {
+    newArticle = new News({
+      title,
+      abstract,
+      text,
+      writer: writerID,
+    });
+    newArticle.save();
+
+    res.redirect('/news')
   }
-
-  newArticle = new News({
-    title,
-    abstract,
-    text,
-    writer: writerID,
-  });
-  newArticle.save();
-
-  res.redirect('/news')
 });
 
 // ARTICLE PAGE
