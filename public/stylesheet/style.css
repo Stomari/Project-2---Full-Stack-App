@@ -226,6 +226,10 @@ a {
   border-radius: 20px;
 }
 
+.news-img {
+  width: 80vw;
+}
+
 .user-menu {
   background-color: rgba(0, 0, 0, 0.685);
   color: rgb(255, 255, 255);
